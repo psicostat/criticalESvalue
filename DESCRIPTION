@@ -1,0 +1,18 @@
+Package: criticalvalue
+Title: Compute critical values from common statistics models
+Version: 0.0.1
+Authors@R: 
+    person("Ambra", "Perugini", , "ambra.perugini@phd.unipd.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-4661-8063"))
+    person("Filippo", "Gambarota", , "filippo.gambarota@unipd.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6666-1747"))
+    person("Enrico", "Toffalini", , "enrico.toffalini@unipd.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1404-5133"))
+Description: Compute critical values from common statistics models
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

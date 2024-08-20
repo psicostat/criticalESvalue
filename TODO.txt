@@ -1,0 +1,8 @@
+- qualche volta i numeri o le formule inline tipo "... d = 10" non sono formattate come formule e altre volte si. Mettiamo sempre $d = 10$. [ambra] FATTO
+- controllare se tutte le equazioni vengono citate [ambra] FATTO
+- il nome del pacchetto riportato è quello che vogliamo? [ambra, enrico, filippo] 
+- advanced vuole che il contributo degli autori venga descritto con il sistema CRedit https://www.elsevier.com/researcher/author/policies-and-guidelines/credit-author-statement. Il template è già predisposto basta metterlo sotto a ciascun autore (vedi yaml) [ambra]
+- manca abstract e keywords [ambra] FATTO
+- i file rmd di esempi possono essere messi come vignette, ma non nella root del pacchetto [filippo, ambra]
+- pulizia generale pacchetto [filippo]
+- documentazione funzioni tutto ok? [ambra]

@@ -1,0 +1,142 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+options(scipen = 999, digits = 5)
+```
+
+# criticalvalue
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of criticalvalue is to ...
+
+## Installation
+
+You can install the development version of criticalvalue like so:
+
+``` r
+# require(devtools)
+devtools::install_github("filippogambarota/criticalvalue")
+```
+
+## Installation (temporary)
+
+The package is not production-ready thus to test the feature we suggest to clone or download the repository, open the R Project and load the functions with `devtools::load_all()`.
+
+## Example from fitted objects
+
+This is a basic example which shows you how to solve a common problem:
+
+### T Test
+
+```{r example}
+# library(criticalvalue) # when the package will be ready
+devtools::load_all() # loading all functions for testing
+
+# t-test (welch)
+
+x <- rnorm(30, 0.5, 1)
+y <- rnorm(30, 0, 1)
+
+ttest <- t.test(x, y)
+critical(ttest)
+
+# t-test (standard)
+
+ttest <- t.test(x, y, var.equal = TRUE)
+critical(ttest)
+
+# t-test (standard) with monodirectional hyp
+
+ttest <- t.test(x, y, var.equal = TRUE, alternative = "less")
+critical(ttest)
+
+# within the t-test object saved from critical we have all the new values
+
+ttest <- critical(ttest)
+str(ttest)
+```
+
+We can check the results using:
+
+```{r}
+ttest <- t.test(x, y)
+ttest <- critical(ttest)
+
+t <- ttest$bc/ttest$stderr # critical numerator / standard error
+
+# should be 0.05 (or alpha)
+(1 - pt(ttest$bc/ttest$stderr, ttest$parameter)) * 2
+```
+
+### Correlation Test
+
+```{r}
+# cor.test
+ctest <- cor.test(x, y)
+critical(ctest)
+```
+
+### Linear Model
+
+```{r}
+# linear model (unstandardized)
+z <- rnorm(30)
+q <- rnorm(30)
+
+dat <- data.frame(x, y, z, q)
+fit <- lm(y ~ x + q + z, data = dat)
+fit <- critical(fit)
+fit
+summary(fit)
+
+# linear model (standardized)
+fit <- lm(y ~ x + q + z, data = dat)
+fit <- critical(fit, standardize = TRUE)
+fit
+summary(fit)
+```
+
+### Meta-analysis
+
+```{r}
+require(metafor)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+fit <- rma(yi, vi, mods=cbind(ablat, year), data=dat)
+critical(fit)
+```
+
+## Example from summary statistics
+
+```{r}
+x <- rnorm(30, 0.5, 1)
+y <- rnorm(30, 0, 1)
+
+ttest <- t.test(x, y)
+
+m1 <- mean(x)
+m2 <- mean(y)
+sd1 <- sd(x)
+sd2 <- sd(y)
+n1 <- n2 <- 30
+
+critical_t2s(m1, m2, sd1 = sd1, sd2 = sd2, n1 = n1, n2 = n2)
+
+critical_t2s(t = ttest$statistic, se = ttest$stderr, n1 = n1, n2 = n2)
+
+critical_t2s(t = ttest$statistic, n1 = n1, n2 = n2)
+```
+
+

@@ -1,0 +1,119 @@
+---
+title: "Examples of functions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+```
+
+
+
+To install the package the following line of code is needed:
+
+```{r , include = FALSE}
+devtools::load_all()
+```
+
+
+```{r load, eval=FALSE}
+# require(devtools)
+devtools::install_github("filippogambarota/criticalvalue")
+library(criticalvalue)
+```
+
+## Examples on real data
+
+For our examples on real data we used from the package 'psych' the dataset "holzinger.swineford" which has a series of demographics and scores of different subtests measuring intelligence on 301 subjects. Once the package is retrieved with 'library', the dataset can be opened using 'data("name of the dataset")'. For simplicity we decided to rename it with a shorter name.
+
+```{r open data}
+library(psych)
+library(psychTools)
+```
+
+
+```{r dataset}
+data("holzinger.swineford")
+Holz <- holzinger.swineford
+```
+
+#### Critical value for correlation
+
+In the following chunk we want to get the critical value for a correlation of two cognitive sub-tests of 301 subjects. We can do so with the 'critical' function:
+
+```{r correlation}
+cc <- cor.test(Holz$t01_visperc, Holz$t02_cubes)
+critical(cc)
+```
+
+First, the 'cor.test' function should be used on the two variables of interest and then the newly created object should be put into the 'critical' function. The output will add, underneath the usual output of the 'cor.test' function, the absolute critical value (rc), representing the smallest significant effect.
+
+#### Critical value for t-test 
+
+Now we want to know the critical value for a t-test comparing boys and girls on a cognitive variable of visual perception. In this case, it can be easily done with the same procedure using the 't.test' function: 
+
+```{r}
+tt <- t.test(Holz$t01_visperc [ Holz$female == 1], Holz$t01_visperc [ Holz$female == 2])
+critical(tt)
+```
+
+The output now gives a wider range of values: the cohen's d calculated on the data (d), the critical cohen's d (dc), the numerator of the formula for the critical cohen's d (bc), the cohen's d adjusted for small samples (g) and the critical cohen's d adjusted for small samples (gc).
+
+#### Critical value for linear model 
+
+Now we want to calculate the critical coefficients for a linear model with visual perception predicted by age. We can do so by wrapping the 'critical' function into the 'summary' function:
+```{r}
+ll <- lm( t01_visperc ~ ageyr , data = Holz)
+summary(critical(ll))
+```
+
+In the output, a column will appear next to the usual column of the estimates reporting critical values for both the intercept and the predictor(s).
+
+
+## Examples with sample size
+
+In the next examples we will show the use of the package's functions to calculate critical values in a prospective framework.
+
+#### Critical t value from sample size
+
+Let us say that we want to calculate the critical t value for a t-test for a sample of 1200 subjects for each group, the following chunk shows how to do so with the function 'critical_t2s':
+```{r t from n}
+n <- 1200
+critical_t2s(n1 = n , n2 = n , hypothesis = "less")
+```
+
+The function requires to specify the hypothesis as "less", "greater" or "two.tailed". In output we can find the critical d and the critical g, which is the cohen's d adjusted for small samples.
+
+#### Critical t value from sample size for a paired t-test.
+
+Assuming that we want to calculate the critical value for a paired t-test (i.e. pre-post treatment), we can do so with the function 'critical_t2sp' in the following way:
+```{r}
+n <- 15
+critical_t2sp(n = n , hypothesis = "less", conf.level = .95)
+```
+
+Specifying the direction of the hypothesis and the confidence interval, the function will give as output the standardized (dzc) and un-standardized (dc) critical cohen's d, and the critical cohen's d adjusted for small samples both standardized (gc) and un-standardized (gzc).
+
+#### Critical value for a correlation from sample size
+
+The same can be done for the critical value for a correlation on a defined sample size with the 'critical_cor' function:
+
+```{r}
+n <- 60
+critical_cor(n = n, hypothesis = "two.sided", test = "z")
+```
+
+Once more, the direction of the hypothesis and the test to apply, either t-test or z-test, should be specified. The output will return the critical correlation value, the degrees of freedom and the type of test used.
+
+#### Critical value of a beta from a model from saple size
+
+Let us say that we want to know the critical beta of a model, we can use the 'critical_coef' function as shown in the following chunk:
+
+```{r}
+n <- 170
+critical_coef(seb = .1, n = n, p = .01, conf.level = .95, hypothesis = "less")
+```
+
+It is important to specifying sample size, standard error of the estimate, p-value, confidence level and hypothesis. The output will return the critical beta and the test used.
+
+

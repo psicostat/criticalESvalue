@@ -1,0 +1,553 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man]{apa7}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+\makeatletter
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{critical effect size values, statistical significance, fucntions implementation\newline\indent Word count: X}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{csquotes}
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={The benefits of reporting critical effect size values},
+  pdfauthor={Ambra Perugini1, Filippo Gambarota1, Enrico Toffalini2, Daniël Lakens3, Massimiliano Pastore1, Livio Finos4, Psicostat1, \& Gianmarco Altoè1},
+  pdflang={en-EN},
+  pdfkeywords={critical effect size values, statistical significance, fucntions implementation},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{The benefits of reporting critical effect size values}
+\author{Ambra Perugini\textsuperscript{1}, Filippo Gambarota\textsuperscript{1}, Enrico Toffalini\textsuperscript{2}, Daniël Lakens\textsuperscript{3}, Massimiliano Pastore\textsuperscript{1}, Livio Finos\textsuperscript{4}, Psicostat\textsuperscript{1}, \& Gianmarco Altoè\textsuperscript{1}}
+\date{}
+
+
+\shorttitle{Reporting critical effect size values}
+
+\authornote{
+
+The authors made the following contributions. Ambra Perugini: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Filippo Gambarota: Writing -- Original Draft Preparation, Writing - Review \& Editing, Methodology; Enrico Toffalini: Writing -- Original Draft Preparation, Writing - Review \& Editing, Supervision; Daniël Lakens: Conceptualization, Writing - Review \& Editing, Supervision; Massimiliano Pastore: Conceptualization, Writing - Review \& Editing, Supervision; Livio Finos: Conceptualization, Writing - Review \& Editing, Supervision; Psicostat: Conceptualization, Writing - Review \& Editing, Supervision; Gianmarco Altoè: Conceptualization, Writing - Review \& Editing, Supervision.
+
+Correspondence concerning this article should be addressed to Gianmarco Altoè, Via Venezia 8, 35131, Padova, Italy. E-mail: \href{mailto:gianmarco.altoe@unipd.it}{\nolinkurl{gianmarco.altoe@unipd.it}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Department of Developmental and Social Psychology, University of Padova, Italy\\\textsuperscript{2} Department of General Psychology, University of Padova, Italy\\\textsuperscript{3} Eindhoven University of Technology, Netherlands\\\textsuperscript{4} Department of Statistics, University of Padova, Italy}
+
+\abstract{%
+Critical effect size values represent the smallest detectable effect that would reach statistical significance given a certain sample size. These values are highly applicable in various scenarios, as they do not require specifying a plausible effect size of interest. Reporting critical effect size values may be especially useful when adopting NHST (Null Hypothesis Significance Testing) and the sample size has not been planned a priori, or when there is uncertainty on the expected effect size. To assist researchers in calculating critical values, we have developed an R package that allows to report the critical effect size values of model parameters. The package's functions are implemented for group comparisons, correlations, linear regression, and meta-analysis. What we propose could benefit researchers during the planning phase of the study by helping them to understand the limitations and strengths of their research design, and also as a retrospective tool to potentially reframe original interpretations.
+}
+
+
+
+\begin{document}
+\maketitle
+
+In the present paper, we suggest that researchers systematically report the critical effect size values when they make inference using statistical significance. The ``critical effect size values'' refers to the smallest statistically significant effect sizes, which depends on the test performed and the characteristics of the sample (Lakens, 2022). To cut to the chase, let us consider a study that tests (using for example a two-tailed test) a bivariate correlation with \(n = 20\) participants and uses \(p < 0.05\) as the threshold for statistical significance: in this case, the smallest significant effects (critical values) are Pearson's \(r = -0.44\) and \(r = 0.44\). As we will argue, the critical values can serve as a useful complement to aid in the interpretation of study results, communicate their relevance, help assessing their replicability, particularly when statistical significance is relied upon for inference. This is especially important in cases where the sample size was not (or could not) be predetermined based on a theory-driven target effect size or when statistical power may be difficult to determine or deviates from an optimal level.
+
+Despite longstanding criticisms, the Null Hypothesis Significance Testing (NHST) remains a prominent approach for statistical inference in science (Cohen, 1994; Gigerenzer et al., 2004; Krueger, 2001). Over the past decades, numerous proposals have emerged to enhance inference based on this approach. These include conducting power analyses to determine sample size (\(n\)) a priori based on theory-informed target effects, and reporting of effect sizes and their confidence intervals, accompanied by pertinent related comments, rather than drawing dichotomous conclusions solely based on statistical significance (Transue, 2019). Even for the most skeptical, there are suggestions that NHST may possess merits of its own. For instance, Wilson et al. (2020) propose that it could serve as a useful preliminary filter utilized by ``original science'' for screening potentially interesting effects, that should subsequently be validated by ``replication science''.
+
+In psychology, power is often severely limited for medium to small effect sizes (Szucs \& Ioannidis, 2017), which are generally expected to represent true replicable findings. In fact, resource constraints have been authoritatively listed among acceptable justifications for sample size (Lakens, 2022), and this scenario is arguably widespread in psychology. However, limited power makes it challenging to distinguish signal from noise, and on average it results in an overestimation of effect sizes when relying on statistical significance for inference (Altoè et al., 2020). On the other hand, very large samples are occasionally available in psychological science, albeit less frequently. However, as some have argued, excessively large sample sizes risk creating an ``everything-is-significant'' scenario, where researchers report and discuss practically negligible effects solely because they are statistically significant, regardless of theoretical relevance or whether they just reflect minor procedural artifacts (Wilson et al., 2020). Thus, while statistical significance can serve as a potentially useful filter, relying solely on it for inference may introduce risks in interpretation. In such cases, we contend that reporting critical values can help put into perspective and convey the relevance of the results.
+
+There are two clear benefits of reporting the critical effect size for a corresponding test. First, when sample sizes are smaller, the critical values inform readers about whether the effect sizes that could lead to a rejection of the null hypothesis are in line with realistic expectations. If the sample size is small, and only very large effects would yield a statistically significant result, and the underlying mechanism that is examined is unlikely to lead to such large effect sizes, in these cases, researchers will realized they are not able to collect sufficient data to perform a meaningful test. An a-priori power analysis would typically lead to a similar conclusion, but reporting the critical effect sizes focuses the attention more strongly on which effect sizes are reasonable to expect. Second, in large studies the critical effect sizes will make clear that trivially small effect sizes will be statistically significant. This will focus the attention of researchers on the difference between statistical significance and practical significance. This is especially important in correlational studies on large samples in psychology, where small uncontrolled sources of statistical noise may simultaneously affect and create some shared variance across otherwise unrelated variables, a phenomenon controversially labelled as the `crud factor' (Orben \& Lakens, 2020).
+
+Let us consider the following two scenarios as examples. First, imagine researchers conducting a study involving a between-group comparison. Due to severe resource constraints, they are only able to collect a limited sample size of \(n = 30\) (\(n = 15\) per group). No statistically significant effect is detected with \(p < 0.05\). Given their prior expectation that the effect of interest may not be large, they acknowledge that their study was likely underpowered, though uncertain to some extent. Subsequently, they compute the critical values, revealing Cohen's \(d = -0.75\) and \(d = 0.75\). This indicates that any estimated \textbar Cohen's \(d| < 0.75\) will certainly fail to reach statistical significance. By reporting these critical values, the researchers transparently convey that estimated effects up to a medium-to-large magnitude will consistently fall short of significance. In essence, this scenario exemplifies a version of the ``winner's curse'' (Hedges, 1984), made explicit. In this context, the winner's curse indicates the tendency for a statistically significant initial finding (i.e., a ``winner'') to be associated with an overestimated effect size which will probably be deflated in subsequent replications (i.e., the ``curse''), especially if such initial finding was obtained on a small sample. Knowing from the critical values that a specific result must necessarily be associated with an estimated large effect size or be non-significant, readers are, in principle, prevented from both over-interpreting the magnitude of an effect size and from equating lack of statistical significance with lack of an effect of interest.
+
+In a second scenario, imagine researchers who gain access to a very large archival dataset (\(n = 5,000\)) and decide to explore some bivariate correlations. With such a large sample size, researchers are not constrained by sample size limitations and could instead just focus on effect sizes. However, they opt to legitimately use statistical significance of a two-tailed test as their primary criterion for whether to comment on effects in their further discussions. In this context, the critical effect size values for significance are determined to be correlations of \(r = \pm 0.03\). This implies that practically any effect differing from zero, regardless of its small magnitude, may easily attain statistical significance. It is worth noting that such small effects may potentially reflect just minor artifacts (Wilson et al., 2020), such as subtle experimenter effects or slight non-independence among observations, even in meticulously designed studies. While readers may be tempted to interpret any reported effects simply because they attain statistical significance, preliminarily signaling the critical value level can serve as a clear warning that the significance filter might be somehow permissive, thus urging interpretive caution.
+
+A similar scenario may arise in meta-analysis. Despite potential loss of precision due to substantial heterogeneity across effect sizes in different studies, meta-analyses typically synthesize a large amount of evidence, leading even very small average effect sizes to reach significance. While the focus of meta-analysis is generally on estimating effect sizes with uncertainty, statistical significance is routinely reported and interpreted. Thus, in meta-analysis as well, reporting the critical values can caution readers that the mere attainment of statistical significance by the average effect does not automatically ensure scientific or real-life relevance.
+
+To provide more tangible illustrations of the practical application of critical values, let us examine two real-world instances drawn from published research. The first one features a small sample, and has been targeted in the series of replications by the Open Science Collaboration (Collaboration, 2015), while the second one presents with a very large sample and has already attracted attention in the scientific community. The first case pertains to ``Study 5'' conducted by McCrea (2008). This experiment compared two groups based on their performance percentage in a math test following a preliminary practice session with feedback of failure. One group was exposed to failure-excusing, self-handicapping thoughts, while both groups underwent the math test afterward. With a modest sample size of 28 participants split into two groups (13 and 15 participants, respectively), a directional one-tailed t-test was conducted on the percentage of correct answers to compare the groups. The resulting effect was statistically significant, \(t(26) = 1.87, p (one-tailed) < .05\). Based on the reported data, Cohen's \(d = 0.736\), indicating a considerable effect size. However, the critical value for Cohen's \(d\) in this context was \(0.645\), suggesting that, given this sample size, statistical significance is achieved only for estimated effects of substantial magnitude. Subsequent replication efforts (Collaboration, 2015) reaffirmed the significance of the effect, and used a somewhat larger sample (\(n = 61\)), \(t(59)=2.325\). The estimated effect size was somehow lower than that originally reported, however, \(d = 0.605\) (here, critical d = 0.428). The second scenario involves the study by Kramer et al. (2014), which explored the impact of emotional content on Facebook users' experiences. With a notably large sample size of \(n = 689'003\), the researchers observed a significant effect worsened emotional states when positive posts were reduced, \(t(310,044) = −5.63\), \(p < 0.001\) (non-directional test). Based on this and other results, the authors conclude that emotions expressed by other users on Facebook influence our own emotions. Despite the statistical significance, however, the critical values for Cohen's \(d\) in this case are \(-0.006\) and \(+0.006\), emphasizing the importance of considering effect size beyond mere significance. This prompts reflection on whether an effect of such magnitude on such a large sample (actual \(d = 0.02\)) is truly meaningful in individuals' lives.
+
+\hypertarget{how-to-compute-critical-effect-size-values}{%
+\section{How to Compute Critical Effect Size Values}\label{how-to-compute-critical-effect-size-values}}
+
+In this section, we provide guidance and formulas for computing critical values in general, with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's \(d\)), correlations (Pearson's r), and raw and standardized coefficients in linear models. These formulas have been incorporated into R functions of the package ``criticalESvalues'' accessible at: \url{https://github.com/filippogambarota/criticalvalue}, and are elaborated upon in the subsequent section.
+
+\hypertarget{t-test}{%
+\subsection{t-test}\label{t-test}}
+
+For the t-test we considered the two-sample, paired and one-sample tests. As a general approach the \(t\) statistics is computed as reported in Equation \eqref{eq:eq-gen-t}.
+
+\begin{equation}
+    \label{eq:eq-gen-t}
+    t = \frac{b}{\text{SE}_{b}}
+\end{equation}
+
+Where \(b\) is the unstandardized effect size that depends on the type of test. For example, in the two sample t-test or the single mean for a one sample t-test. The denominator is the standard error of the numerator.
+
+Similarly, Equation \eqref{eq:eq-gen-d} formalize a general form of the effect size.
+
+\begin{equation}
+    \label{eq:eq-gen-d}
+    d = \frac{b}{s}
+\end{equation}
+
+Where \(b\) is still the unstandardized effect size and \(s\) is the standardization term. For example, in the two-sample case, \(s\) is the pooled standard deviation between the two samples or the standard deviation of the differences for paired samples.
+
+\hypertarget{two-sample-t-test}{%
+\subsubsection{two-sample t-test}\label{two-sample-t-test}}
+
+For the two sample t-test the critical value (\(b_c\)) is calculated using Equation \eqref{eq:eq-tw-sp}. Where \(t_c\) is the critical \(t\) value calculated using a certain \(\alpha\) value (e.g., \(0.05\)) and \(n_1 + n_2 - 2\) degrees of freedom. Then the \(b_c\) is simply divided by \(s\) obtaining the standardized critical value. For the two-sample case (\(s = s_p\) assuming equal variances) Equation \eqref{eq:eq-s-p-twsmp} reported the pooled standard deviation.
+
+\begin{equation}
+    \label{eq:eq-tw-sp}
+    b_c = t_c \times \text{SE}_{b}
+\end{equation}
+
+\begin{equation}
+    \label{eq:eq-s-p-twsmp}
+    s_p = \sqrt{\frac{s_1^2 (n_1 - 1) + s_2^2 (n_2 - 1)}{n_1 + n_2 - 2}}
+\end{equation}
+
+When relaxing the assumption of equal variances (i.e., Welch's test) \(s\) is simply the square root of the average between the two variances.
+
+\hypertarget{one-sample-t-test}{%
+\subsubsection{one sample t-test}\label{one-sample-t-test}}
+
+For the one sample case, the equations are the same. The only difference is that \(b\) is the sample mean and \(s\) is the sample standard deviation.
+
+\hypertarget{paired-sample-t-test}{%
+\subsubsection{paired sample t-test}\label{paired-sample-t-test}}
+
+For the paired sample case the situation is less straightforward. The reason is that the \(t\) statistic is computed using \(b\) being the average of the paired differences between the two (paired) samples and \(s\) being the standard deviation/error of the differences. While for hypothesis testing and power analysis it is common to calculate the \(d\) dividing by the standard deviation of the differences (Lakens, 2013), this effect size cannot be directly compared to the effect size used in the independent samples t-test, which divides by the pooled standard deviation (Morris \& DeShon, 2002). Practically, Equation \eqref{eq:eq-sp-sd} depicts the relationship between the pooled standard deviation and the standard deviation of the differences.
+
+\begin{equation}
+    \label{eq:eq-sp-sd}
+    \begin{gathered}
+        s_p =  \frac{s_D}{\sqrt{2(1 - \rho)}} \\
+        s_D =  s_p \sqrt{2(1 - \rho)}
+    \end{gathered}
+\end{equation}
+
+Where \(\rho\) is the correlation between the two paired samples. Even if the hypothesis testing is computed using \(s_D\), we reported the critical value both using the pooled standard deviation and the standard deviation of the differences. Beyond this difference, the equations are still the same as the previous example.
+
+\hypertarget{hedgess-correction}{%
+\subsubsection{Hedges's correction}\label{hedgess-correction}}
+
+The effect size calculated as in the previous step is known to be inflated thus we calculated also the corrected version usually known as Hedges's \(g\) (Hedges, 1981).
+
+\hypertarget{correlation-test}{%
+\subsection{Correlation Test}\label{correlation-test}}
+
+For the Pearson's correlation test, the critical value is computed using Equation \eqref{eq:eq-cor-c} where \(t_c\) is still the critical value for the \(t\) distribution and \(n\) is the sample size.
+
+\begin{equation}
+    \label{eq:eq-cor-c}
+    r_c = \frac{t_c}{\sqrt{n - 2 + t_c^2}}
+\end{equation}
+
+Another approach for hypothesis testing of the Pearson's correlation coefficient is using the Fisher's \(z\) transformation. Equation \eqref{eq:eq-f-rc} shows how to calculate the critical \(F(r_c)\) value where \(z_c\) is the critical value of the standard normal distribution with a chosen \(\alpha\) level. Then the \(F(r_c)\) can be transformed back into a correlation coefficient using Equation \eqref{eq:eq-bk-r}.
+
+\begin{equation}
+    \label{eq:eq-f-rc}
+    \begin{gathered}
+        F(r_c) = \frac{z_c}{\sqrt{n - 3}}
+    \end{gathered}
+\end{equation}
+
+\begin{equation}
+    \label{eq:eq-bk-r}
+    r_c = \frac{\exp(2z_c)-1}{\exp(2z_c)+1} = \operatorname{tanh}(z_c)
+\end{equation}
+
+\hypertarget{linear-regression}{%
+\subsection{Linear Regression}\label{linear-regression}}
+
+Hypothesis testing on single coefficients in linear regression (using the \texttt{lm} function in R) is performed using the Wald test. This test is basically a t-test where the \(t\) value is calculated dividing the regression parameter \(\beta_0, \dots, \beta_j\) by the standard error. Then a \(t\) distribution using \(n - p - 1\) degrees of freedom where \(n\) is the number of observations and \(p\) is the number of coefficients beyond the intercept. The \(t\) value is calculated as reported in Equation \eqref{eq:eq-wald-lm} and the critical value as reported in Equation \eqref{eq:eq-critical-lm}.
+
+\begin{equation}
+\label{eq:eq-wald-lm}
+    t = \frac{\beta_j}{SE_{\beta_j}}
+\end{equation}
+
+\begin{equation}
+\label{eq:eq-critical-lm}
+    \beta_{jc} = t_c SE_{\beta_j}
+\end{equation}
+
+In this case \(\beta_{jc}\) is the unstandardized critical regression coefficient (as \(b\) in the \(t\)-test section). We implemented also the possibility to use standardized regression coefficients. We can identify two types of standardization, namely full and partial. The full standardization involves both the response variable and the predictors. Regression coefficients are interpreted as the increase in standard deviations of the response variable for an increase of one standard deviation in the predictor, keeping fixed all other predictors. The partial standardization involves only the predictors and regression coefficients are interpreted as the increase in the (raw) response variable for a increase in one standard deviation of the predictor. By default, standardizing means dividing a quantity by the standard deviation and eventually centering (i.e., subtracting the mean). Gelman (Gelman, 2008) suggested to standardize using two standard deviations because when numeric and binary variables are included the coefficients are not on the same metric. Equation \eqref{eq:eq-critical-lm} can be used but to calculate the critical value for the standardized regression coefficients the result need to be interpreted according to the chosen approach.
+
+\hypertarget{meta-analysis}{%
+\subsubsection{Meta-analysis}\label{meta-analysis}}
+
+Meta-analysis allows to pool information from multiple studies related to a specific research question. The main advantage of meta-analysis is pooling multiple studies to obtain a more precise and powerful estimation of the effect. From a statistical point of view, a meta-analysis can be considered as a weighted linear regression with heterogeneous variances. Similarly to standard linear regression, hypothesis testing is performed using Wald \(t\) or \(z\) tests. The calculation of critical values is the same as reported in Equations \eqref{eq:eq-wald-lm} and \eqref{eq:eq-critical-lm}. The only difference is that the standard error of the meta-analysis parameters included both the within-studies variances and eventually the between-studies heterogeneity.
+
+\hypertarget{other-models}{%
+\subsubsection{Other models}\label{other-models}}
+
+Despite we discussed only linear models, the same approach could be theoretically applied to other types of models such as generalized linear models. In fact, we simply need to multiply the critical value of the chosen distribution (e.g., Student \(t\) or Standard Normal) by the standard error of the regression coefficient.
+
+\hypertarget{examples-in-r}{%
+\section{Examples in R}\label{examples-in-r}}
+
+In this section, we introduce a user-friendly implementation of the aforementioned mathematical computations as functions of the package ``criticalESvalues'' in R. The complete package can be accessed at: \url{https://github.com/filippogambarota/criticalvalue}. Here, we demonstrate its application through two examples: one example of a t-test on real data and a computation of the critical value for a correlation from sample size. In the Supplementary online materials additional examples can be found for correlation, t-test, paired t-test, linear models and regression coefficients, both from data and from sample size.
+
+First the package should be downloaded and opened with the library function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# devtools::install\_github("filippogambarota/criticalvalue")}
+\FunctionTok{library}\NormalTok{(criticalvalue)}
+\end{Highlighting}
+\end{Shaded}
+
+For our examples on real data we used from the package `psych' the dataset ``holzinger.swineford'' which has a series of demographics and scores of different subtests measuring intelligence on 301 subjects. Once the package is retrieved with `library', the dataset can be opened using `data(``name of the dataset'')'. For simplicity we decided to rename it with a shorter name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{library}\NormalTok{(psychTools)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"holzinger.swineford"}\NormalTok{)}
+\NormalTok{Holz }\OtherTok{\textless{}{-}}\NormalTok{ holzinger.swineford}
+\end{Highlighting}
+\end{Shaded}
+
+We want to know the critical value for a t-test comparing boys and girls on a cognitive variable of visual perception. In this case, it can be easily done with the same procedure using the `t.test' function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tt }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(Holz}\SpecialCharTok{$}\NormalTok{t01\_visperc[Holz}\SpecialCharTok{$}\NormalTok{female }\SpecialCharTok{==} \DecValTok{1}\NormalTok{], }
+\NormalTok{             Holz}\SpecialCharTok{$}\NormalTok{t01\_visperc[Holz}\SpecialCharTok{$}\NormalTok{female }\SpecialCharTok{==} \DecValTok{2}\NormalTok{])}
+\FunctionTok{critical}\NormalTok{(tt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> 
+#>  Welch Two Sample t-test
+#> 
+#> data:  Holz$t01_visperc[Holz$female == 1] and Holz$t01_visperc[Holz$female == 2]
+#> t = 1.4095, df = 298.9, p-value = 0.1597
+#> alternative hypothesis: true difference in means is not equal to 0
+#> 95 percent confidence interval:
+#>  -0.06419229  0.38823118
+#> sample estimates:
+#> mean of x mean of y 
+#>  4.314090  4.152071 
+#> 
+#> |== Effect Size and Critical Value ==| 
+#> d = 0.1623665 dc = ± 0.2269609 bc = ± 0.2262117 
+#> g = 0.1619587 gc = ± 0.2263909
+\end{verbatim}
+
+The output gives a wide range of values: the Cohen's \(d\) calculated on the data (\(d\)), the critical Cohen's \(d\) (\(dc\)), the numerator of the formula for the critical Cohen's \(d\) (\(bc\)), the Cohen's \(d\) adjusted for small samples (\(g\)) and the critical Cohen's \(d\) adjusted for small samples (\(gc\)).
+
+In the next example we will show the use of the package's function \texttt{critical\_cor} to calculate the critical value for a correlation in a prospective framework.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{60}
+\FunctionTok{critical\_cor}\NormalTok{(}\AttributeTok{n =}\NormalTok{ n, }\AttributeTok{hypothesis =} \StringTok{"two.sided"}\NormalTok{, }\AttributeTok{test =} \StringTok{"z"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+#> $rc
+#> [1] 0.2539247
+#> 
+#> $df
+#> [1] 58
+#> 
+#> $test
+#> [1] "z"
+\end{verbatim}
+
+The direction of the hypothesis and the test to apply, either \(t\)-test or \(z\)-test, should be specified. The output will return the critical correlation value, the degrees of freedom and the type of test used.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+With the present article, we propose that researchers compute and report the ``critical effect size value(s)'' in their empirical articles. This is not intended to replace other strategies aimed at enhancing the NHST approach to inference. Such strategies, such as the emphasis on estimating effect sizes with confidence intervals (Transue, 2019) or the a priori planning for statistical power are valuable in their own right. Instead, our proposal serves as a complementary tool, especially beneficial for facilitating the interpretation of results when statistical power deviates from an optimal level (typically falling below, but occasionally exceeding it). Interestingly, the critical value can be retrospectively applied even to already published studies. This possible application facilitates potential reframing of the original interpretations. Serving as a tool for retrospective analysis, the critical value may enable a reconsideration of the relevance of previously reported findings.
+
+An advantage of reporting the critical value is that it can be precisely computed in any scenario, without requiring assumptions about the expected effect size, as is the case with power calculations. The critical value represents a directly interpretable benchmark that is especially useful in situations where statistical power is below the desired level and researchers are left otherwise uncertain about how to proceed with the interpretation of a study findings. For example, let us say that we read a published article reporting some effects as statistically significant, while others as not: we suspect that the study may be underpowered, but we are widely uncertain about the magnitude of possible true effects. To what extent can the reported results be interpreted, precisely? Knowing the critical value provides us with a clear benchmark. Conversely, let us say that an effect achieves significance in a very large sample: researchers tend to draw substantive conclusions based on this. But is it of real theoretical relevance? If in comparing two groups, such as controls versus treatment, any Cohen's \(d > 0.07\) would reach significance, is statistical significance enough to signal a ``successful'' treatment? Maybe yes, even if effects are tiny (e.g., Funder \& Ozer, 2019), but knowing the critical value certainly prompts some appropriate interpretive caution.
+
+Reporting the critical value(s) can also be an efficient way to allow researchers to evaluate which findings are statistically significant. For example, in a correlation table researchers customarily add an asterisk to all statistically significant correlations. But as long as all correlations are based on the same sample size, researchers can simply remark `the critical effect size is \(r = 0.3\)' and readers will know that all correlations larger than this value are statistically significant.
+
+Beyond enhancing study design and statistical inferences based on hypothesis tests, reporting critical value(s) can also serve an educational purpose. It underscores how the distinction between a significant and non-significant result is not solely determined by the presence or absence of a true effect, but also by the sample size. By highlighting a critical value, researchers can become more aware of the possibility of Type 2 errors when results are non-significant. Conversely, in studies with exceedingly large samples and in many meta-analyses, the critical value(s) may serves as a reminder that any observed effect larger than a trivially small value will likely achieve significance. This emphasizes that the mere attainment of statistical significance in a test is not particularly surprising, especially in non-experimental studies.
+
+Real-case scenarios may not always be that simple. Hence, we chose to expand the application of computing critical significance values beyond Cohen's \(d\) and correlation to include linear regression with both raw and standardized coefficients. This serves as a first step in computing critical values for a wider array of effects encountered in practical scenarios, where linear models and their extensions are commonly utilized for modeling purposes. A prerequisite is that researchers must be able to identify what parameters in their statistical models reflect the effect sizes of interest, and that they are able to assess their relevance. Notably, however, this prerequisite aligns with the requirements of APA style guidelines concerning the reporting of effect sizes. For further illustration and application, additional examples are provided in the Supplementary online material.
+
+We suggest that reporting critical effect size values is particularly valuable when sample size planning was not feasible or did not occur \textit{a priori}. In cases where optimal power can be attained with a sufficiently large sample size for an effect of a specific magnitude of interest, and this is truly determined \textit{a priori}, the interpretation of both significance and non-significance becomes straightforward. However, when power analysis did not inform the sample size or when power is likely but undeterminedly low, reporting critical values for the obtained sample can help provide context for interpretation. Critical values can be computed and interpreted even retrospectively or for studies that have already been published.
+
+In conclusion, the reporting of the critical value in empirical articles serves as a valuable addition to researchers' toolkit, aimed at augmenting transparency and facilitating the interpretability of their findings. While not designed to supplant existing practices, it provides a useful aid in interpreting newly presented and previously published results, thus advancing the understanding of research outcomes.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-altoe2020enhancing}{}}%
+Altoè, G., Bertoldo, G., Zandonella Callegher, C., Toffalini, E., Calcagnı̀, A., Finos, L., \& Pastore, M. (2020). Enhancing statistical inference in psychological research via prospective and retrospective design analysis. \emph{Frontiers in Psychology}, \emph{10}, 499756.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cohen1994}{}}%
+Cohen, J. (1994). The earth is round (p \textless{} .05). \emph{American Psychologist}, \emph{49}(12), 997--1003.
+
+\leavevmode\vadjust pre{\hypertarget{ref-open2015estimating}{}}%
+Collaboration, O. S. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251), aac4716.
+
+\leavevmode\vadjust pre{\hypertarget{ref-funder2019evaluating}{}}%
+Funder, D. C., \& Ozer, D. J. (2019). Evaluating effect size in psychological research: Sense and nonsense. \emph{Advances in Methods and Practices in Psychological Science}, \emph{2}(2), 156--168.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gelman2008-zp}{}}%
+Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. \emph{Statistics in Medicine}, \emph{27}, 2865--2873. \url{https://doi.org/10.1002/sim.3107}
+
+\leavevmode\vadjust pre{\hypertarget{ref-gigerenzer2004null}{}}%
+Gigerenzer, G., Krauss, S., \& Vitouch, O. (2004). The null ritual. \emph{The Sage Handbook of Quantitative Methodology for the Social Sciences}, 391--408.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hedges1981-za}{}}%
+Hedges, L. V. (1981). Distribution theory for glass's estimator of effect size and related estimators. \emph{Journal of Educational and Behavioral Statistics: A Quarterly Publication Sponsored by the American Educational Research Association and the American Statistical Association}, \emph{6}, 107--128. \url{https://doi.org/10.3102/10769986006002107}
+
+\leavevmode\vadjust pre{\hypertarget{ref-hedges1984estimation}{}}%
+Hedges, L. V. (1984). Estimation of effect size under nonrandom sampling: The effects of censoring studies yielding statistically insignificant mean differences. \emph{Journal of Educational Statistics}, \emph{9}(1), 61--85.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kramer2014experimental}{}}%
+Kramer, A. D., Guillory, J. E., \& Hancock, J. T. (2014). Experimental evidence of massive-scale emotional contagion through social networks. \emph{Proceedings of the National Academy of Sciences of the United States of America}, \emph{111}(24), 8788.
+
+\leavevmode\vadjust pre{\hypertarget{ref-krueger2001null}{}}%
+Krueger, J. (2001). Null hypothesis significance testing: On the survival of a flawed method. \emph{American Psychologist}, \emph{56}(1), 16.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lakens2013calculating}{}}%
+Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. \emph{Frontiers in Psychology}, \emph{4}, 62627.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lakens2022sample}{}}%
+Lakens, D. (2022). Sample size justification. \emph{Collabra: Psychology}, \emph{8}(1), 33267.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mccrea2008self}{}}%
+McCrea, S. M. (2008). Self-handicapping, excuse making, and counterfactual thinking: Consequences for self-esteem and future motivation. \emph{Journal of Personality and Social Psychology}, \emph{95}(2), 274.
+
+\leavevmode\vadjust pre{\hypertarget{ref-morris2002combining}{}}%
+Morris, S. B., \& DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \emph{7}(1), 105.
+
+\leavevmode\vadjust pre{\hypertarget{ref-orben_crud_2020}{}}%
+Orben, A., \& Lakens, D. (2020). Crud ({Re}){Defined}. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(2), 238--247. \url{https://doi.org/10.1177/2515245920917961}
+
+\leavevmode\vadjust pre{\hypertarget{ref-szucs2017empirical}{}}%
+Szucs, D., \& Ioannidis, J. P. (2017). Empirical assessment of published effect sizes and power in the recent cognitive neuroscience and psychology literature. \emph{PLoS Biology}, \emph{15}(3), e2000797.
+
+\leavevmode\vadjust pre{\hypertarget{ref-transue2019apa}{}}%
+Transue, B. (2019). \emph{APA style 7th edition}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wilson2020science}{}}%
+Wilson, B. M., Harris, C. R., \& Wixted, J. T. (2020). Science is not a signal detection problem. \emph{Proceedings of the National Academy of Sciences}, \emph{117}(11), 5559--5567.
+
+\end{CSLReferences}
+
+
+\end{document}
