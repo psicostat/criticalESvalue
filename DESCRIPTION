@@ -1,21 +1,30 @@
-Package: criticalvalue
-Title: Compute critical values from common statistics models
+Package: criticalESvalue
+Title: Compute Critical Effect Size Values From Common Statistics Models
+Description: Calculate and report critical effect size values for common statistical models from R objects and summary statiistics.
 Version: 0.0.1
-Authors@R: 
-    person("Ambra", "Perugini", , "ambra.perugini@phd.unipd.it", role = c("aut", "cre"),
-           comment = c(ORCID = "0009-0001-4661-8063"))
+Authors@R: c(
+    person("Ambra", "Perugini", , "ambra.perugini@phd.unipd.it", role = c("aut"),
+           comment = c(ORCID = "0009-0001-4661-8063")),
     person("Filippo", "Gambarota", , "filippo.gambarota@unipd.it", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-6666-1747"))
-    person("Enrico", "Toffalini", , "enrico.toffalini@unipd.it", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-1404-5133"))
-Description: Compute critical values from common statistics models
+           comment = c(ORCID = "0000-0002-6666-1747")),
+    person("Enrico", "Toffalini", , "enrico.toffalini@unipd.it", role = c("aut"),
+           comment = c(ORCID = "0000-0002-1404-5133")))
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+Imports: 
+    stats,
+    utils,
+    insight
 Suggests: 
     knitr,
+    MASS,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    psych,
+    psychTools
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
-VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+URL: https://psicostat.github.io/criticalvalue/

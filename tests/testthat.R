@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(criticalvalue)
+library(criticalESvalue)
 
-test_check("criticalvalue")
+test_check("criticalESvalue")

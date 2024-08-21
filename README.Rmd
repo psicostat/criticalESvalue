@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 options(scipen = 999, digits = 5)
 ```
 
-# criticalvalue
+# criticalESvalue
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -24,11 +24,11 @@ The goal of criticalvalue is to ...
 
 ## Installation
 
-You can install the development version of criticalvalue like so:
+You can install the development version of criticalESvalue like so:
 
 ``` r
 # require(devtools)
-devtools::install_github("filippogambarota/criticalvalue")
+devtools::install_github("psicostat/criticalESvalue")
 ```
 
 ## Installation (temporary)

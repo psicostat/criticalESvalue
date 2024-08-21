@@ -13,10 +13,9 @@ critical <- function(x, ...){
 #' Compute critical effect size values for t-test and correlation tests
 #' @description Compute critical effect size values for objects of classes htest computed with t.test or cor.test
 #' @param x an object of class htest (available for t.test, cor.test)
-#' @param type a value among "Two Sample", "One Sample", "correlation", "Paired"
 #' @return an object of class critvalue
 #' @export
-critical.htest <- function(x, type = NULL){
+critical.htest <- function(x){
   # all implemented subtype of htest objects
   mtds <- c("Two Sample", "One Sample", "correlation", "Paired")
   
@@ -39,7 +38,7 @@ critical.htest <- function(x, type = NULL){
     
     alpha <- .get_alpha(conf.level, hypothesis)
     df <- x$parameter
-    tc <- qt(alpha, df)
+    tc <- stats::qt(alpha, df)
     t <- x$statistic
     se <- x$stderr
     b <- x$estimate
@@ -48,7 +47,8 @@ critical.htest <- function(x, type = NULL){
   
   if(grepl("correlation", method)){
     n <- df + 2
-    cc <- critical_cor(n = n, conf.level = conf.level, hypothesis = hypothesis)
+    r <- x$estimate
+    cc <- critical_cor(r = r, n = n, conf.level = conf.level, hypothesis = hypothesis)
     dc <- bc <- cc$rc
     d <- b
     class(x) <- c("critvalue", "ctest", "htest")
@@ -56,7 +56,7 @@ critical.htest <- function(x, type = NULL){
     if(grepl("Two Sample", method)){
       n <- tapply(D$x, D$y, length)
       if(grepl("Welch", method)){
-        ss <- tapply(D$x, D$y, sd)
+        ss <- tapply(D$x, D$y, stats::sd)
         mm <- tapply(D$x, D$y, mean)
         tt <- critical_t2s(m1 = mm[1], m2 = mm[2],
                            sd1 = ss[1], sd2 = ss[2], 
@@ -69,11 +69,11 @@ critical.htest <- function(x, type = NULL){
                            conf.level = conf.level, hypothesis = hypothesis)
       }
     } else if(grepl("One Sample", method)){
-      n <- length(D$x)
+      n <- nrow(D)
       tt <- critical_t1s(t = t, se = se, n = n, hypothesis = hypothesis, conf.level = conf.level)
     } else if(grepl("Paired", method)){
       n <- length(D$x)
-      r12 <- cor(D$x[D$y == 1], D$x[D$y == 2])
+      r12 <- stats::cor(D$x[D$y == 1], D$x[D$y == 2])
       tt <- critical_t2sp(t = t, 
                           se = se, 
                           r12 = r12,
@@ -89,7 +89,7 @@ critical.htest <- function(x, type = NULL){
     d <- tt$d
     bc <- tt$bc
     dc <- tt$dc
-    x$g <- tt$g
+    x$g <- unname(tt$g)
     x$gc <- tt$gc
     class(x) <- c("critvalue", "ttest", "htest")
     
@@ -110,21 +110,15 @@ critical.htest <- function(x, type = NULL){
 #' @param conf.level the confidence interval level, needed to compute the smallest significant coefficient (default is 0.95, equaling a critical alpha = 0.05)
 #' @return an object of class critvalue
 #' @export
-critical.lm <- function(x, conf.level = 0.95,
-                        standardize = FALSE,
-                        ...){
+critical.lm <- function(x, conf.level = 0.95){
   
   # always two.sided
   hypothesis <- "two.sided"
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- x$df.residual
   
-  if(standardize){
-    x <- standardize(x, ...)
-  }
-  
-  se <- sqrt(diag(vcov(x)))
-  ll <- critical_coef(se, df = df, conf.level = conf.level, hypothesis = hypothesis)
+  seb <- sqrt(diag(stats::vcov(x))) # standard error coefficients
+  ll <- critical_coef(seb, df = df, conf.level = conf.level, hypothesis = hypothesis)
   d <- NA
   dc <- NA
   x$d <- NA
@@ -162,14 +156,12 @@ critical.rma <- function(x, conf.level = 0.95){
 #' @export
 print.critvalue <- function(x, digits = getOption("digits"), ...){
   NextMethod(x, ...)
-  # TODO vedi se c'è un modo di fare un metodo con due classi
-  # nested in modo da fare critvalue/ttest e critvalue/htest
   x <- .round_list(x, digits)
   if(inherits(x, "ttest")){
     cat("|== Effect Size and Critical Value ==|", "\n")
     if(x$alternative == "two.sided"){
-      cat("d =", x$d, "dc = ±", abs(x$dc), "bc = ±", abs(x$bc),"\n")
-      cat("g =", x$g, "gc = ±", abs(x$gc), "\n")
+      cat("d =", x$d, "dc = \u00b1", abs(x$dc), "bc = \u00b1", abs(x$bc),"\n")
+      cat("g =", x$g, "gc = \u00b1", abs(x$gc), "\n")
     } else if(x$alternative == "greater"){
       cat("d =", x$d, "dc =", abs(x$dc), "bc =", abs(x$bc),"\n")
       cat("g =", x$g, "gc =", abs(x$gc), "\n")
@@ -204,7 +196,7 @@ print.critvalue <- function(x, digits = getOption("digits"), ...){
   } else if(inherits(x, "lm")){
     cat("\nCritical |Coefficients| \n\n")
     bc <- x$bc
-    names(bc) <- names(coef(x))
+    names(bc) <- names(stats::coef(x))
     print(abs(bc), ...)
     cat("\n")
   } else if(inherits(x, "rma.uni")){
@@ -214,7 +206,7 @@ print.critvalue <- function(x, digits = getOption("digits"), ...){
       rownames(crit) <- ""
     }
     names(crit) <- "|critical estimate|"
-    cat(capture.output(print(crit)), sep = "\n")
+    cat(utils::capture.output(print(crit)), sep = "\n")
   }
   invisible(x)
 }

@@ -4,7 +4,7 @@
 \alias{critical.lm}
 \title{Compute critical effect size values for linear regression models}
 \usage{
-\method{critical}{lm}(x, conf.level = 0.95, standardize = FALSE, ...)
+\method{critical}{lm}(x, conf.level = 0.95)
 }
 \arguments{
 \item{x}{an object of class lm}

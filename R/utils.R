@@ -7,9 +7,9 @@
   test <- match.arg(test)
   # two tails
   if(test == "t"){
-    p <- 2 * pt(-abs(q), df)
+    p <- 2 * stats::pt(-abs(q), df)
   }else{
-    p <- 2 * pnorm(-abs(q))
+    p <- 2 * stats::pnorm(-abs(q))
   }
   if(hypothesis == "1t"){
     p <- p / 2
@@ -49,7 +49,7 @@
   ifelse(hypothesis %in% c("two.sided", "greater"), x, -x) 
 }
 
-sim_t_data <- function(m1, m2 = NULL, 
+.sim_t_data <- function(m1, m2 = NULL, 
                        sd1, sd2 = NULL, 
                        n1, n2 = NULL,
                        type = c("1s", "2s", "2sp"),
@@ -73,4 +73,16 @@ sim_t_data <- function(m1, m2 = NULL,
   
   return(data)
   
+}
+
+.get_s <- function(sd1, sd2, n1 = NULL, n2 = NULL, var.equal = TRUE){
+  if(var.equal){
+    if(is.null(n1) | is.null(n2)){
+      stop("When pooled = TRUE, sample size need to be provided!")
+    }
+    s <- sqrt((sd1^2 * (n1 - 1) + sd2^2 * (n2 - 1)) / (n1 + n2 - 2))
+  } else{
+    s <- sqrt(0.5*(sd1^2 + sd2^2))
+  }
+  return(s)
 }

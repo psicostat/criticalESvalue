@@ -6,3 +6,8 @@
 paper
 ^doc$
 ^Meta$
+^TODO\.txt
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

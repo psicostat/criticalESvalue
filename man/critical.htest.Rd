@@ -4,12 +4,10 @@
 \alias{critical.htest}
 \title{Compute critical effect size values for t-test and correlation tests}
 \usage{
-\method{critical}{htest}(x, type = NULL)
+\method{critical}{htest}(x)
 }
 \arguments{
 \item{x}{an object of class htest (available for t.test, cor.test)}
-
-\item{type}{a value among "Two Sample", "One Sample", "correlation", "Paired"}
 }
 \value{
 an object of class critvalue

@@ -22,7 +22,7 @@ crit_from_t_t2s <- function(t = NULL, n1, n2, se = NULL,
   }
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- n1 + n2 - 2
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   if(is.null(t)){
     warning("When t is NULL, d cannot be computed, returning NA")
     d <- NA
@@ -83,7 +83,7 @@ crit_from_data_t2s <- function(m1, m2,
     if(is.null(se)) se <- s * sqrt(1/n1 + 1/n2)
     if(is.null(df)) df <- n1 + n2 - 2
   }
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   d <- b / s
   bc <- tc * se
   dc <- tc * sqrt(1/n1 + 1/n2)
@@ -111,7 +111,7 @@ crit_from_t_t1s <- function(t = NULL, n, se = NULL,
                             hypothesis){
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- n - 1
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   dc <- tc * sqrt(1/n)
   if(is.null(t)){
     warning("When t is NULL, d cannot be computed, returning NA")
@@ -149,7 +149,7 @@ crit_from_data_t1s <- function(m, s, n, se = NULL, df = NULL,
                                conf.level, hypothesis){
   alpha <- .get_alpha(conf.level, hypothesis)
   if(is.null(df)) df <- n - 1
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   if(is.null(se)) se <- s / sqrt(n)
   d <- m / s
   dc <- tc * sqrt(1/n)
@@ -176,7 +176,7 @@ crit_from_data_t1s <- function(m, s, n, se = NULL, df = NULL,
 crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, conf.level){
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- n - 1
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   
   # d on differences
   dzc <- tc * sqrt(1/n)
@@ -213,12 +213,13 @@ crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, con
 #' @param sd1 a number representing the standard deviation of group 1.
 #' @param sd2 a number representing the standard deviation of group 2.
 #' @param r12 a number corresponding to the correlation between variable 1 and variable 2.
+#' @param se standard error of the mean difference
 #' @param n a number corresponding to the sample size.
 #' @param df degrees of freedom.
 #' @param conf.level confidence level of the interval.
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #'
-#' @return the output returns a "dz" which is the d standartized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+#' @return the output returns a "dz" which is the d standardized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
 #' @export
 #'
 #' @examples
@@ -234,7 +235,7 @@ crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of
                                 hypothesis){
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- n - 1
-  tc <- abs(qt(alpha, df))
+  tc <- abs(stats::qt(alpha, df))
   
   if(!is.null(m2) & !is.null(sd2) & is.null(r12)){
     warning("when m2 and sd2 are provided and r12 is NULL dz and dzc and cannot be computed, returning NA")
@@ -307,6 +308,7 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
   if(!is.na(out$dc)){
     out$gc <- J * out$dc
   }
+  out <- lapply(out, unname)
   return(out)
 }
 
@@ -365,6 +367,7 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
   if(!is.na(out$dc)){
     out$gc <- J * out$dc
   }
+  out <- lapply(out, unname)
   return(out)
 }
 
@@ -414,6 +417,7 @@ critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
   if(!is.na(out$dzc)){
     out$gzc <- J * out$dzc
   }
+  out <- lapply(out, unname)
   return(out)
 }
 
@@ -442,7 +446,7 @@ critical_cor <- function(r = NULL, n,
   alpha <- .get_alpha(conf.level, hypothesis)
   
   if(test == "t"){
-    tc <- abs(qt(alpha, df))
+    tc <- abs(stats::qt(alpha, df))
     rc <- tc / sqrt(n - 2 + tc^2)
     se_rc <- sqrt((1 - rc^2)/(n - 2))
     if(!is.null(r)){
@@ -450,17 +454,24 @@ critical_cor <- function(r = NULL, n,
     }else{
       se_r <- NA
     }
+    rzc <- NA
+    se_rzc <- NA
   }else{
-    zc <- abs(qnorm(alpha))
-    rc <- tanh(zc / sqrt(n - 3))
-    se_rc <- 1 / sqrt(n - 3)
+    # F(r) is the Fisher's z transformed correlation
+    zc <- abs(stats::qnorm(alpha))
+    rc <- tanh(zc / sqrt(n - 3)) # critical r
+    rzc <- atanh(rc) # critical z = F(r)
+    se_rzc <- 1 / sqrt(n - 3) # standard error in z units
+    se_rc <- sqrt((1 - rc^2)/(n - 2)) # standard error in r units
     if(!is.null(r)){
       se_r <- se_rc
     }else{
-      se_r <- NA
+      se_r <- sqrt((1 - r^2)/(n - 2))
     }
   }
-  out <- list(rc = rc, df = df, se_r = se_r, se_rc = se_rc, test = test)
+  out <- list(rc = rc, rzc = rzc, df = df, se_r = se_r, se_rc = se_rc, se_rzc = se_rzc, test = test)
+  out <- lapply(out, unname)
+  
   return(out)
 }
 
@@ -468,7 +479,7 @@ critical_cor <- function(r = NULL, n,
 #' @description
 #' This function allows to calculate the critical beta.
 #' 
-#' @param seb a number corresponding to the standard error of the \beta.
+#' @param seb a numeric vector of standard error of the regression coefficients.
 #' @param n a number corresponding to the sample size.
 #' @param p number of parameters.
 #' @param df degrees of freedom.
@@ -497,9 +508,9 @@ critical_coef <- function(seb, n = NULL, p = NULL,df = NULL,
   }
   
   if(test == "t"){
-    qc <- abs(qt(alpha, df))
+    qc <- abs(stats::qt(alpha, df))
   }else{
-    qc <- abs(qnorm(alpha, df))
+    qc <- abs(stats::qnorm(alpha, df))
   }
   
   bc <- qc * seb

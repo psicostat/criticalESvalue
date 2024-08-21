@@ -19,11 +19,11 @@ To install the package the following line of code is needed:
 ```{r load, eval=FALSE}
 # require(devtools)
 devtools::install_github("filippogambarota/criticalvalue")
-library(criticalvalue)
+library(criticalESvalue)
 ```
 
 ```{r, include=FALSE}
-library(criticalvalue)
+library(criticalESvalue)
 ```
 
 ## Examples on real data

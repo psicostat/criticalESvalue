@@ -15,7 +15,7 @@ critical_coef(
 )
 }
 \arguments{
-\item{seb}{a number corresponding to the standard error of the \beta.}
+\item{seb}{a numeric vector of standard error of the regression coefficients.}
 
 \item{n}{a number corresponding to the sample size.}
 
