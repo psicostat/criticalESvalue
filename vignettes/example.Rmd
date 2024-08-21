@@ -1,24 +1,28 @@
 ---
-title: "Examples of functions"
-output: html_document
+title: "example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
-
-
 
 To install the package the following line of code is needed:
-
-```{r , include = FALSE}
-devtools::load_all()
-```
-
 
 ```{r load, eval=FALSE}
 # require(devtools)
 devtools::install_github("filippogambarota/criticalvalue")
+library(criticalvalue)
+```
+
+```{r, include=FALSE}
 library(criticalvalue)
 ```
 

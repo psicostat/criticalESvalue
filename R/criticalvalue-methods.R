@@ -27,6 +27,11 @@ critical.htest <- function(x, type = NULL){
     )
   } else {
     D <- insight::get_data(x)
+    
+    if(is.null(D)){
+      stop("insight::get_data(x) returning NULL. Are you using the formula syntax (y ~ x)? This syntax is not supported yet")
+    }
+    
     conf.level <- attributes(x$conf.int)$conf.level
     
     # hypothesis <- ifelse(x$alternative == "two.sided", "2t", "1t")

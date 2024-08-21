@@ -39,7 +39,7 @@ critical_t2sp(
 \item{conf.level}{the confidence level to set the confidence interval, default is set to 0.95.}
 }
 \value{
-the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence iterval.
+the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence interval.
 }
 \description{
 The function allows to calculate the standardized cohen's d, the critical standardized cohen's d, the cohen's d and the critical d for a paired two samples t-test.

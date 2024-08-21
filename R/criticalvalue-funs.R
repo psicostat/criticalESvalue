@@ -1,4 +1,3 @@
-
 #' crit_from_t_t2s
 #' @description
 #' This function allows to calculate the cohen's d and the critical d given the t-value for a two samples t-test, sample size of the two groups and the standard error, specifying the confidence level of the interval, the direction of the hypothesis and the variance parameter.
@@ -37,7 +36,7 @@ crit_from_t_t2s <- function(t = NULL, n1, n2, se = NULL,
   }else{
     bc <- (tc * se)
   }
-  out <- list(d = d, dc = dc, bc = bc, df = df)
+  out <- list(d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -81,14 +80,14 @@ crit_from_data_t2s <- function(m1, m2,
   }else{ # standard
     # pooled sd
     s <- sqrt((sd1^2 * (n1 - 1) + sd2^2 * (n2 - 1)) / (n1 + n2 - 2))
-    if(is.null(se)) se <- s * (1/n1 + 1/n2)
+    if(is.null(se)) se <- s * sqrt(1/n1 + 1/n2)
     if(is.null(df)) df <- n1 + n2 - 2
   }
   tc <- abs(qt(alpha, df))
   d <- b / s
   bc <- tc * se
   dc <- tc * sqrt(1/n1 + 1/n2)
-  out <- list(d = d, dc = dc, bc = bc, df = df)
+  out <- list(d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -126,7 +125,7 @@ crit_from_t_t1s <- function(t = NULL, n, se = NULL,
   }else{
     bc <- tc * se
   }
-  out <- list(d = d, dc = dc, bc = bc, df = df)
+  out <- list(d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -155,7 +154,7 @@ crit_from_data_t1s <- function(m, s, n, se = NULL, df = NULL,
   d <- m / s
   dc <- tc * sqrt(1/n)
   bc <- tc * se
-  out <- list(d = d, dc = dc, bc = bc, df = df)
+  out <- list(d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -201,7 +200,7 @@ crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, con
     bc <- tc * se
   }
   
-  out <- list(dz = dz, dzc = dzc, d = d, dc = dc, bc = bc, df = df)
+  out <- list(dz = dz, dzc = dzc, d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -223,10 +222,13 @@ crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, con
 #' @export
 #'
 #' @examples
-crit_from_data_t2sp <- function(m1, m2 = NULL, 
-                                sd1, sd2 = NULL, 
+
+# TODO add m1 and sd1 to the documentation
+crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of differences
+                                sd1, sd2 = NULL, # if sd2 = NULL, sd1 is the standard deviation of differences
                                 r12 = NULL, 
                                 n,
+                                se = NULL, # standard error of differences
                                 df = NULL,
                                 conf.level,
                                 hypothesis){
@@ -240,23 +242,29 @@ crit_from_data_t2sp <- function(m1, m2 = NULL,
   
   if(is.null(r12)) r12 <- 0
   
-  if(is.null(m2)){
+  if(is.null(m2)){ # m1 is the average of differences
     b <- m1
   }else{
+    # for paired (n1 = n2) the average of differences is the difference of the means
     b <- m1 - m2
   }
   
-  if(is.null(sd2)){
-    sd <- sd1
+  if(is.null(sd2)){ # sd1 is the standard deviation of differences
+    sdiff <- sd1
+    sp <- sdiff / sqrt(2 * (1 - r12))
   }else{
-    sd <- sqrt(sd1^2 + sd2^2 - 2*r12*sd1*sd2)
+    sdiff <- sqrt(sd1^2 + sd2^2 - 2*r12*sd1*sd2)
+    sp <- sqrt((sd1^2 + sd2^2) / 2)
   }
   
-  dz <- b / sd
-  dzc <- tc * (1/n)
-  d <- dz * sqrt(2 * (1 - r12))
+  se <- sdiff / sqrt(n)
+  
+  dz <- b / sdiff
+  dzc <- tc * sqrt(1 / n)
+  d <- b / sp
   dc <- dzc * sqrt(2 * (1 - r12))
-  out <- list(dz = dz, dzc = dzc, d = d, dc = dc, bc = bc, df = df)
+  bc <- tc * se
+  out <- list(dz = dz, dzc = dzc, d = d, dc = dc, bc = bc, se = se, df = df)
   return(out)
 }
 
@@ -284,9 +292,9 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
                          conf.level = 0.95){
   hypothesis <- match.arg(hypothesis)
   if(!is.null(m)){
-    out <- crit_from_data_t1s(m, s, n, conf.level, hypothesis)
+    out <- crit_from_data_t1s(m = m, s = s, n = n, conf.level = conf.level, hypothesis = hypothesis)
   }else{
-    out <- crit_from_t_t1s(t, n, se, conf.level, hypothesis)
+    out <- crit_from_t_t1s(t = t, n = n, se = se, conf.level = conf.level, hypothesis = hypothesis)
   }
   
   # Hedges's Correction
@@ -341,12 +349,12 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
                               df = df,
                               var.equal = var.equal)
   }else{
-    out <- crit_from_t_t2s(t, 
-                    n1, n2, 
-                    se, 
-                    conf.level, 
-                    hypothesis, 
-                    var.equal)
+    out <- crit_from_t_t2s(t = t, 
+                    n1 = n1, n2 = n2, 
+                    se = se, 
+                    conf.level = conf.level, 
+                    hypothesis = hypothesis, 
+                    var.equal = var.equal)
   }
   # Hedges's Correction
   J <- .get_J(out$df)
@@ -387,9 +395,9 @@ critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
                           conf.level = 0.95){
   hypothesis <- match.arg(hypothesis)
   if(!is.null(m1)){
-    out <- crit_from_data_t2sp(m1, m2, sd1, sd2, n, se, r12, conf.level, hypothesis)
+    out <- crit_from_data_t2sp(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, r12 = r12, n = n, conf.level = conf.level, hypothesis = hypothesis)
   }else{
-    out <- crit_from_t_t2sp(t, n, se, r12, hypothesis, conf.level)
+    out <- crit_from_t_t2sp(t = t, n = n, se = se, r12 = r12, hypothesis = hypothesis, conf.level = conf.level)
   }
   # Hedges's Correction
   
@@ -452,7 +460,7 @@ critical_cor <- function(r = NULL, n,
       se_r <- NA
     }
   }
-  out <- list(rc = rc, df = df, test = test)
+  out <- list(rc = rc, df = df, se_r = se_r, se_rc = se_rc, test = test)
   return(out)
 }
 
