@@ -20,7 +20,7 @@ crit_from_t_t2sp(t = NULL, n, se = NULL, r12 = NULL, hypothesis, conf.level)
 \item{conf.level}{confidence level of the interval.}
 }
 \value{
-the output returns a "dz" which is the d standartized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+the output returns a \code{dz} which is the critical Cohen's d standartized on the standard deviation of the differences, the \code{dzc} is the critical standardized d using the pooled standard deviation, the \code{d} is the Cohen's d (pooled standard deviation), the \code{bc} is the numerator of the formula from which the d is calculated, \code{df} are the degrees of freedom, and \code{se} is the standard error.
 }
 \description{
 This function allows to calculate the standardized cohen's d, the critical standardized cohen's d, cohen's d and critical cohen's d given for a paired t test, given the t-value, the sample size, the standard error and the correlation between the two variables, specifying the confidence level of the interval and the direction of the hypothesis.

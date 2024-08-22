@@ -4,12 +4,14 @@
 \alias{critical.lm}
 \title{Compute critical effect size values for linear regression models}
 \usage{
-\method{critical}{lm}(x, conf.level = 0.95)
+\method{critical}{lm}(x, conf.level = 0.95, ...)
 }
 \arguments{
 \item{x}{an object of class lm}
 
 \item{conf.level}{the confidence interval level, needed to compute the smallest significant coefficient (default is 0.95, equaling a critical alpha = 0.05)}
+
+\item{...}{Additional arguments (currently unused).}
 }
 \value{
 an object of class critvalue

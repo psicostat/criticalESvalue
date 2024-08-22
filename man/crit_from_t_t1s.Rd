@@ -18,7 +18,7 @@ crit_from_t_t1s(t = NULL, n, se = NULL, conf.level, hypothesis)
 \item{hypothesis}{a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").}
 }
 \value{
-the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+the output returns a \code{d} which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{df} are the degrees of freedom, and \code{se} is the standard error.
 }
 \description{
 This function allows to calculate the cohen's d and the critical d for a one samples t-test given the t-value, sample size, specifying the confidence level of the interval and the direction of the hypothesis.

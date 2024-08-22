@@ -10,9 +10,8 @@
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param var.equal a logical variable indicating whether to treat the two variances as being equal.
 #'
-#' @export
-#' @return the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#'
+#' @return the output returns a `d` which is the Cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom and `se` is the standard error.
+
 crit_from_t_t2s <- function(t = NULL, n1, n2, se = NULL,
                             conf.level, 
                             hypothesis,
@@ -56,10 +55,8 @@ crit_from_t_t2s <- function(t = NULL, n1, n2, se = NULL,
 #' @param df degrees of freedom.
 #' @param var.equal a logical variable indicating whether to treat the two variances as being equal.
 #'
-#' @return the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#' @export
+#' @return the output returns a `d` which is the Cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample size, the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom, and `se` is the standard error.
 #'
-#' @examples
 crit_from_data_t2s <- function(m1, m2, 
                                sd1, sd2, 
                                n1, n2, 
@@ -102,10 +99,8 @@ crit_from_data_t2s <- function(m1, m2,
 #' @param conf.level confidence level of the interval.
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #'
-#' @return the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#' @export
+#' @return the output returns a `d` which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom, and `se` is the standard error.
 #'
-#' @examples
 crit_from_t_t1s <- function(t = NULL, n, se = NULL,
                             conf.level,
                             hypothesis){
@@ -134,17 +129,15 @@ crit_from_t_t1s <- function(t = NULL, n, se = NULL,
 #' This function allows to calculate the cohen's d and the critical d for a one samples t-test given the mean, the variance and the sample numerosity, specifying the standard error, degrees of freedom, confidence level of the interval and the direction of the hypothesis.
 #' 
 #' @param m mean of the sample.
-#' @param s a number corresponding to the variance.
+#' @param s a number corresponding to the sample standard deviatio
 #' @param n a number corresponding to the sample size.
 #' @param se a number corresponding to the standard error.
 #' @param df degrees of freedom.
 #' @param conf.level confidence level of the interval.
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #'
-#' @return the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#' @export
+#' @return the output returns a `d` which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated `df` are the degrees of freedom, and `se` is the standard error.
 #'
-#' @examples
 crit_from_data_t1s <- function(m, s, n, se = NULL, df = NULL, 
                                conf.level, hypothesis){
   alpha <- .get_alpha(conf.level, hypothesis)
@@ -169,10 +162,8 @@ crit_from_data_t1s <- function(m, s, n, se = NULL, df = NULL,
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level confidence level of the interval.
 #'
-#' @return the output returns a "dz" which is the d standartized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#' @export
+#' @return the output returns a `dz` which is the critical Cohen's d standartized on the standard deviation of the differences, the `dzc` is the critical standardized d using the pooled standard deviation, the `d` is the Cohen's d (pooled standard deviation), the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom, and `se` is the standard error.
 #'
-#' @examples
 crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, conf.level){
   alpha <- .get_alpha(conf.level, hypothesis)
   df <- n - 1
@@ -208,23 +199,20 @@ crit_from_t_t2sp <- function(t = NULL, n, se = NULL, r12 = NULL, hypothesis, con
 #' @description
 #' This function allows to calculate the standardized cohen's d, the critical standardized cohen's d, cohen's d, critical cohen's d and the numerator of formula from which to compute the cohen's d  given the mean of the two groups, the standard deviation of the means, correlation between the two variables and sample size, specifying the degrees of freedom, the confidence level of the interval and the direction of the hypothesis.
 #' 
-#' @param m1 a number representing the mean of group 1.
-#' @param m2 a number representing the mean of group 2.
-#' @param sd1 a number representing the standard deviation of group 1.
-#' @param sd2 a number representing the standard deviation of group 2.
-#' @param r12 a number corresponding to the correlation between variable 1 and variable 2.
-#' @param se standard error of the mean difference
+#' @param m1 a number representing the mean of condition 1 (e.g., pre scores). If `m2` is `NULL`, `m1` is the mean of differences between condition 1 and condition 2.
+#' @param m2 a number representing the mean of condition 2 (e.g., post scores). Default to `NULL`. 
+#' @param sd1 a number representing the standard deviation of condition 1. If `sd2` is `NULL`, `sd1` is the standard deviation of differences between condition 1 and condition 2.
+#' @param sd2 a number representing the standard deviation of condition 2. Default to `NULL`. 
+#' @param r12 a number corresponding to the correlation between the two conditions (e.g., pre-post correlation).
+#' @param se standard error of the mean of differences.
 #' @param n a number corresponding to the sample size.
 #' @param df degrees of freedom.
 #' @param conf.level confidence level of the interval.
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #'
-#' @return the output returns a "dz" which is the d standardized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
-#' @export
+#'  @return the output returns a `dz` which is the critical Cohen's d standartized on the standard deviation of the differences, the `dzc` is the critical standardized d using the pooled standard deviation, the `d` is the Cohen's d (pooled standard deviation), the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom, and `se` is the standard error.
 #'
-#' @examples
 
-# TODO add m1 and sd1 to the documentation
 crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of differences
                                 sd1, sd2 = NULL, # if sd2 = NULL, sd1 is the standard deviation of differences
                                 r12 = NULL, 
@@ -287,6 +275,18 @@ crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of
 #' @export
 #'
 #' @examples
+#' # critical value from summary statistics
+#' m <- 0.5
+#' s <- 1
+#' n <- 30
+#' critical_t1s(m = m, s = s, n = n)
+#' # critical value from the t statistic
+#' se <- s / sqrt(n)
+#' t <- m / se
+#' critical_t1s(t = t, n = n, se = se) # se only required for calculating bc
+
+# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
+# TODO manca esempio (qui faccio io un esempio, prova a fare gli altri)
 critical_t1s <- function(m = NULL, s = NULL, t = NULL,
                          n, se = NULL,
                          hypothesis = c("two.sided", "greater", "less"),
@@ -333,6 +333,8 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
 #' @export
 #'
 #' @examples
+# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
+# TODO manca esempio
 critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
                          sd1 = NULL, sd2 = NULL,
                          n1, n2, se = NULL,
@@ -389,6 +391,8 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
 #'
 #' @return the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence interval.
 #' @export
+# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
+# TODO manca esempio
 #'
 #' @examples
 critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
@@ -423,18 +427,18 @@ critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
 
 #' critical_cor
 #' @description
-#' This function allows to calculate the critical correlation value.
+#' This function allows to calculate the critical correlation value. When using `test = "t"`, the critical value is calculated assuming a Student t distribution with \eqn{n - 2} degrees of freedom and the standard error calculated using the raw correlation coefficient. When `test = "z"`, the critical value is calculated assimong a standard Normal distribution and the standard error is calculated applying the Fisher's z transformation.
 #' 
 #' @param r a number corresponding to the correlation coefficient.
 #' @param n a number corresponding to the sample size.
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param test a parameter to specify which test to apply, either "t" for a t-test or "z" for a z-test.
-#'
-#' @return the output returns the critical correlation value, the degrees of freedom and the test used (either t or z).
+#' @return `rc` is the critical correlation value, `rzc` is the Fisher's z transformed critical correlation, `df` are the degrees of freedom, `se_r` is the standard error of the observed correlation, `se_rc` is the standard error of the critical correlation, `se_rzc` is the standard error of the Fisher's z transformed critical correlation and `test` is the statistical test (either t or z).
 #' @export
 #'
 #' @examples
+# TODO manca esempio
 critical_cor <- function(r = NULL, n, 
                          conf.level = 0.95, 
                          hypothesis = c("two.sided", "greater", "less"), 
@@ -491,6 +495,7 @@ critical_cor <- function(r = NULL, n,
 #' @export
 #'
 #' @examples
+# TODO manca esempio
 critical_coef <- function(seb, n = NULL, p = NULL,df = NULL,
                              conf.level = 0.95,
                              hypothesis = c("two.sided", "greater", "less"),

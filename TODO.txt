@@ -1,4 +1,0 @@
-- il nome del pacchetto riportato è quello che vogliamo? [ambra, enrico, filippo] 
-- i file rmd di esempi possono essere messi come vignette, ma non nella root del pacchetto [filippo, ambra]
-- pulizia generale pacchetto [filippo]
-- documentazione funzioni tutto ok? [ambra]

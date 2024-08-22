@@ -18,28 +18,27 @@ crit_from_data_t2sp(
 )
 }
 \arguments{
-\item{m1}{a number representing the mean of group 1.}
+\item{m1}{a number representing the mean of condition 1 (e.g., pre scores). If \code{m2} is \code{NULL}, \code{m1} is the mean of differences between condition 1 and condition 2.}
 
-\item{m2}{a number representing the mean of group 2.}
+\item{m2}{a number representing the mean of condition 2 (e.g., post scores). Default to \code{NULL}.}
 
-\item{sd1}{a number representing the standard deviation of group 1.}
+\item{sd1}{a number representing the standard deviation of condition 1. If \code{sd2} is \code{NULL}, \code{sd1} is the standard deviation of differences between condition 1 and condition 2.}
 
-\item{sd2}{a number representing the standard deviation of group 2.}
+\item{sd2}{a number representing the standard deviation of condition 2. Default to \code{NULL}.}
 
-\item{r12}{a number corresponding to the correlation between variable 1 and variable 2.}
+\item{r12}{a number corresponding to the correlation between the two conditions (e.g., pre-post correlation).}
 
 \item{n}{a number corresponding to the sample size.}
 
-\item{se}{standard error of the mean difference}
+\item{se}{standard error of the mean of differences.}
 
 \item{df}{degrees of freedom.}
 
 \item{conf.level}{confidence level of the interval.}
 
-\item{hypothesis}{a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").}
-}
-\value{
-the output returns a "dz" which is the d standardized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+\item{hypothesis}{a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
+
+@return the output returns a \code{dz} which is the critical Cohen's d standartized on the standard deviation of the differences, the \code{dzc} is the critical standardized d using the pooled standard deviation, the \code{d} is the Cohen's d (pooled standard deviation), the \code{bc} is the numerator of the formula from which the d is calculated, \code{df} are the degrees of freedom, and \code{se} is the standard error.}
 }
 \description{
 This function allows to calculate the standardized cohen's d, the critical standardized cohen's d, cohen's d, critical cohen's d and the numerator of formula from which to compute the cohen's d  given the mean of the two groups, the standard deviation of the means, correlation between the two variables and sample size, specifying the degrees of freedom, the confidence level of the interval and the direction of the hypothesis.

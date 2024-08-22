@@ -1,4 +1,3 @@
-
 #' Compute critical effect size values for a range of different objects
 #' @description Compute critical effect size values for objects of classes htest (Student's t-test, correlation test), lm, or rma
 #' @param x an object of class htest (available for t.test, cor.test), lm (a linear regression model), or rma (a meta-analytic linear model fitted with the "metafor" package)
@@ -13,9 +12,10 @@ critical <- function(x, ...){
 #' Compute critical effect size values for t-test and correlation tests
 #' @description Compute critical effect size values for objects of classes htest computed with t.test or cor.test
 #' @param x an object of class htest (available for t.test, cor.test)
+#' @param ... Additional arguments (currently unused).
 #' @return an object of class critvalue
 #' @export
-critical.htest <- function(x){
+critical.htest <- function(x, ...){
   # all implemented subtype of htest objects
   mtds <- c("Two Sample", "One Sample", "correlation", "Paired")
   
@@ -108,9 +108,10 @@ critical.htest <- function(x){
 #' @description Compute critical effect size values for linear model coefficients of objects of class lm
 #' @param x an object of class lm
 #' @param conf.level the confidence interval level, needed to compute the smallest significant coefficient (default is 0.95, equaling a critical alpha = 0.05)
+#' @param ... Additional arguments (currently unused).
 #' @return an object of class critvalue
 #' @export
-critical.lm <- function(x, conf.level = 0.95){
+critical.lm <- function(x, conf.level = 0.95, ...){
   
   # always two.sided
   hypothesis <- "two.sided"
@@ -133,9 +134,10 @@ critical.lm <- function(x, conf.level = 0.95){
 #' @description Compute critical effect size values for coefficients of objects of class rma (fitted with the "metafor" package)
 #' @param x an object of class rma
 #' @param conf.level the confidence interval level, needed to compute the smallest significant coefficient (default is 0.95, equaling a critical alpha = 0.05)
+#' @param ... Additional arguments (currently unused).
 #' @return an object of class critvalue
 #' @export
-critical.rma <- function(x, conf.level = 0.95){
+critical.rma <- function(x, conf.level = 0.95, ...){
   if(inherits(x, "rma.uni")){
     hypothesis <- "two.sided"
     se <- x$se
@@ -212,19 +214,21 @@ print.critvalue <- function(x, digits = getOption("digits"), ...){
 }
 
 #' @export
-summary.critvalue <- function(x, ...){
-  NextMethod(x, ...)
-  if(inherits(x, "lm")){
+summary.critvalue <- function(object, ...) {
+  NextMethod(object, ...)
+  if (inherits(object, "lm")) {
     # taken from https://github.com/cran/lm.beta/blob/master/R/summary.lm.beta.R
-    x2 <- x
-    attr(x2, "class") <- "lm"
-    x.summary <- summary(x2, ...)
-    x.summary$coefficients <- cbind(x.summary$coefficients[, 
-                                                           1, drop = F], `|Critical Estimate|` = abs(x$bc), 
-                                    x.summary$coefficients[, -1, drop = F])
-    class(x.summary) <- c("summary.critvalue", class(x.summary))
-  } else if(inherits(x, "rma.uni")){
-    x.summary <- x
+    object2 <- object
+    attr(object2, "class") <- "lm"
+    object.summary <- summary(object2, ...)
+    object.summary$coefficients <- cbind(
+      object.summary$coefficients[, 1, drop = FALSE],
+      `|Critical Estimate|` = abs(object$bc),
+      object.summary$coefficients[, -1, drop = FALSE]
+    )
+    class(object.summary) <- c("summary.critvalue", class(object.summary))
+  } else if (inherits(object, "rma.uni")) {
+    object.summary <- object
   }
-  x.summary
+  object.summary
 }

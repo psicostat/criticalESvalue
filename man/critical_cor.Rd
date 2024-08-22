@@ -24,8 +24,8 @@ critical_cor(
 \item{test}{a parameter to specify which test to apply, either "t" for a t-test or "z" for a z-test.}
 }
 \value{
-the output returns the critical correlation value, the degrees of freedom and the test used (either t or z).
+\code{rc} is the critical correlation value, \code{rzc} is the Fisher's z transformed critical correlation, \code{df} are the degrees of freedom, \code{se_r} is the standard error of the observed correlation, \code{se_rc} is the standard error of the critical correlation, \code{se_rzc} is the standard error of the Fisher's z transformed critical correlation and \code{test} is the statistical test (either t or z).
 }
 \description{
-This function allows to calculate the critical correlation value.
+This function allows to calculate the critical correlation value. When using \code{test = "t"}, the critical value is calculated assuming a Student t distribution with \eqn{n - 2} degrees of freedom and the standard error calculated using the raw correlation coefficient. When \code{test = "z"}, the critical value is calculated assimong a standard Normal distribution and the standard error is calculated applying the Fisher's z transformation.
 }

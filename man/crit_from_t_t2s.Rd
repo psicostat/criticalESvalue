@@ -30,7 +30,7 @@ crit_from_t_t2s(
 \item{var.equal}{a logical variable indicating whether to treat the two variances as being equal.}
 }
 \value{
-the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+the output returns a \code{d} which is the Cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{df} are the degrees of freedom and \code{se} is the standard error.
 }
 \description{
 This function allows to calculate the cohen's d and the critical d given the t-value for a two samples t-test, sample size of the two groups and the standard error, specifying the confidence level of the interval, the direction of the hypothesis and the variance parameter.

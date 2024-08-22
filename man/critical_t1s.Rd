@@ -35,3 +35,14 @@ the output returns, based on the inserted values, mean, variance, confidence int
 \description{
 The function allows to calculate cohen's d and critical d for a one-sample t-test.
 }
+\examples{
+# critical value from summary statistics
+m <- 0.5
+s <- 1
+n <- 30
+critical_t1s(m = m, s = s, n = n)
+# critical value from the t statistic
+se <- s / sqrt(n)
+t <- m / se
+critical_t1s(t = t, n = n, se = se) # se only required for calculating bc
+}

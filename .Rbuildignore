@@ -3,7 +3,7 @@
 ^deprecated
 ^LICENSE\.md$
 ^README\.Rmd$
-paper
+^paper
 ^doc$
 ^Meta$
 ^TODO\.txt

@@ -9,7 +9,7 @@ crit_from_data_t1s(m, s, n, se = NULL, df = NULL, conf.level, hypothesis)
 \arguments{
 \item{m}{mean of the sample.}
 
-\item{s}{a number corresponding to the variance.}
+\item{s}{a number corresponding to the sample standard deviatio}
 
 \item{n}{a number corresponding to the sample size.}
 
@@ -22,7 +22,7 @@ crit_from_data_t1s(m, s, n, se = NULL, df = NULL, conf.level, hypothesis)
 \item{hypothesis}{a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").}
 }
 \value{
-the output returns a "d" which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.
+the output returns a \code{d} which is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated \code{df} are the degrees of freedom, and \code{se} is the standard error.
 }
 \description{
 This function allows to calculate the cohen's d and the critical d for a one samples t-test given the mean, the variance and the sample numerosity, specifying the standard error, degrees of freedom, confidence level of the interval and the direction of the hypothesis.

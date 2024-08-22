@@ -21,30 +21,27 @@ options(scipen = 999, digits = 5)
 <!-- badges: end -->
 
 The goal of criticalvalue is to ...
+<!-- TODO aggiungi qualche riga qui -->
 
 ## Installation
 
 You can install the development version of criticalESvalue like so:
 
 ``` r
-# require(devtools)
-devtools::install_github("psicostat/criticalESvalue")
+# require(remotes)
+remotes::install_github("psicostat/criticalESvalue")
 ```
 
-## Installation (temporary)
+## Examples
 
-The package is not production-ready thus to test the feature we suggest to clone or download the repository, open the R Project and load the functions with `devtools::load_all()`.
-
-## Example from fitted objects
-
-This is a basic example which shows you how to solve a common problem:
+```{r}
+# loading the package
+library(criticalESvalue)
+```
 
 ### T Test
 
 ```{r example}
-# library(criticalvalue) # when the package will be ready
-devtools::load_all() # loading all functions for testing
-
 # t-test (welch)
 
 x <- rnorm(30, 0.5, 1)
@@ -101,18 +98,12 @@ fit <- lm(y ~ x + q + z, data = dat)
 fit <- critical(fit)
 fit
 summary(fit)
-
-# linear model (standardized)
-fit <- lm(y ~ x + q + z, data = dat)
-fit <- critical(fit, standardize = TRUE)
-fit
-summary(fit)
 ```
 
 ### Meta-analysis
 
 ```{r}
-require(metafor)
+library(metafor)
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 fit <- rma(yi, vi, mods=cbind(ablat, year), data=dat)
 critical(fit)
