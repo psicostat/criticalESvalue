@@ -18,7 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/example.html">example</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/equations.html">Equations</a></li>
+    <li><a class="dropdown-item" href="../articles/example.html">Some examples</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -60,23 +61,23 @@
 
 
 <dl><dt id="arg-m-">m1<a class="anchor" aria-label="anchor" href="#arg-m-"></a></dt>
-<dd><p>a number representing the mean of group 1.</p></dd>
+<dd><p>a number representing the mean of condition 1 (e.g., pre scores). If <code>m2</code> is <code>NULL</code>, <code>m1</code> is the mean of differences between condition 1 and condition 2.</p></dd>
 
 
 <dt id="arg-m-">m2<a class="anchor" aria-label="anchor" href="#arg-m-"></a></dt>
-<dd><p>a number representing the mean of group 2.</p></dd>
+<dd><p>a number representing the mean of condition 2 (e.g., post scores). Default to <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-sd-">sd1<a class="anchor" aria-label="anchor" href="#arg-sd-"></a></dt>
-<dd><p>a number representing the standard deviation of group 1.</p></dd>
+<dd><p>a number representing the standard deviation of condition 1. If <code>sd2</code> is <code>NULL</code>, <code>sd1</code> is the standard deviation of differences between condition 1 and condition 2.</p></dd>
 
 
 <dt id="arg-sd-">sd2<a class="anchor" aria-label="anchor" href="#arg-sd-"></a></dt>
-<dd><p>a number representing the standard deviation of group 2.</p></dd>
+<dd><p>a number representing the standard deviation of condition 2. Default to <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-r-">r12<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
-<dd><p>a number corresponding to the correlation between variable 1 and variable 2.</p></dd>
+<dd><p>a number corresponding to the correlation between the two conditions (e.g., pre-post correlation).</p></dd>
 
 
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
@@ -84,7 +85,7 @@
 
 
 <dt id="arg-se">se<a class="anchor" aria-label="anchor" href="#arg-se"></a></dt>
-<dd><p>standard error of the mean difference</p></dd>
+<dd><p>standard error of the mean of differences.</p></dd>
 
 
 <dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
@@ -96,13 +97,10 @@
 
 
 <dt id="arg-hypothesis">hypothesis<a class="anchor" aria-label="anchor" href="#arg-hypothesis"></a></dt>
-<dd><p>a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").</p></dd>
+<dd><p>a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").</p>
+<p>@return the output returns a <code>dz</code> which is the critical Cohen's d standartized on the standard deviation of the differences, the <code>dzc</code> is the critical standardized d using the pooled standard deviation, the <code>d</code> is the Cohen's d (pooled standard deviation), the <code>bc</code> is the numerator of the formula from which the d is calculated, <code>df</code> are the degrees of freedom, and <code>se</code> is the standard error.</p></dd>
 
 </dl></div>
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>the output returns a "dz" which is the d standardized on the standard deviation of the differences, the "dzc" is the critical standardized d, the "d" is the cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the "bc" is the numerator of the formula from which the d is calculated and "df" are the degrees of freedom.</p>
-    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
