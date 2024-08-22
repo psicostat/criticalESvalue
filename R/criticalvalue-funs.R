@@ -271,7 +271,7 @@ crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #'
-#' @return the output returns, based on the inserted values, mean, variance, confidence interval and hypothesis or t-value, numerosity, standard error, confidence interval and hypothesis. 
+#' @return the output returns a `d` which is the Cohen's d, the critical d which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `df` are the degrees of freedom and `se` is the standard error, then it also gives the `g` and `gc` which are respectively `d` and `dc` with Hedfer's Correction for small samples.
 #' @export
 #'
 #' @examples
@@ -285,8 +285,6 @@ crit_from_data_t2sp <- function(m1, m2 = NULL, # if m2 = NULL, m1 is the mean of
 #' t <- m / se
 #' critical_t1s(t = t, n = n, se = se) # se only required for calculating bc
 
-# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
-# TODO manca esempio (qui faccio io un esempio, prova a fare gli altri)
 critical_t1s <- function(m = NULL, s = NULL, t = NULL,
                          n, se = NULL,
                          hypothesis = c("two.sided", "greater", "less"),
@@ -329,12 +327,24 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #'
-#' @return the output returns, based on the inserted values, means of the two groups, standard deviations, numerosity of the two groups, confidence interval, hypothesis, standard error, degrees of freedom and the set parameter for var.equal or the t-value, numerosity of the two groups, standard error, confidence interval, hypothesis and the set parameter for var.equal.
+#' @return the output returns a `d` which is the Cohen's d, the critical d (`dc`) which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` which is the standard error, `df` are the degrees of freedom, then it also gives the `g` and `gc` which are respectively `d` and `dc` with Hedfer's Correction for small samples.
 #' @export
 #'
 #' @examples
-# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
-# TODO manca esempio
+#' # critical value from summary statistics
+#' m1 <- 0.5
+#' m2 <- 1.0
+#' sd1 <- 1
+#' sd2 <- 1.5
+#' n1 <- 30
+#' n2 <- 35
+#' critical_t2s(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, n1 = n1, n2 = n2)
+#' # critical value from the t statistic
+#' se <- sqrt(sd1^2 / n1 + sd2^2 / n2)
+#' t <- (m1 - m2) / se
+#' critical_t2s(t = t, n1 = n1, n2 = n2, se = se) # se only required for calculating bc
+
+# TODO controllare formula dell'esemptio from t test
 critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
                          sd1 = NULL, sd2 = NULL,
                          n1, n2, se = NULL,
@@ -389,12 +399,22 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #'
-#' @return the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence interval.
+#' @return the output returns a `dz` which is the critical Cohen's d standartized on the standard deviation of the differences, the `dzc` is the critical standardized d using the pooled standard deviation, the `d` is the Cohen's d, the `dc` is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` is the standard error, `df` are the degrees of freedom,the `g` and `gc` are respectively `d` and `dc` with Hedger's Correction for small samples and `gz` and `gzc` are the standardized ones.  
 #' @export
-# TODO manca documentare g e gc che sono la versione con small sample correction (Hedges'g) del valore critico e dell'effect size calcolato
-# TODO manca esempio
 #'
 #' @examples
+#' # critical value from summary statistics
+#' m1 <- 0.5
+#' m2 <- 1.0
+#' sd1 <- 1
+#' sd2 <- 1.5
+#' n <- 30
+#' critical_t2sp(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, n = n)
+#' # critical value from the t statistic
+#' se <- sqrt(sd1^2 / n1 + sd2^2 / n2)
+#' t <- (m1 - m2) / se
+#' critical_t2sp(t = t, n = n, se = se) # se only required for calculating bc
+# TODO controllare formula dell'esemptio from t test
 critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
                           sd1 = NULL, sd2 = NULL, r12 = NULL,
                           n, se = NULL,
@@ -438,7 +458,12 @@ critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
 #' @export
 #'
 #' @examples
-# TODO manca esempio
+#' # critical value from r and sample size
+#' r <- .25
+#' n <- 30
+#' critical_cor(r = r, n = n )
+#' 
+# TODO non so se qui dovevo farne anche altri, comunque tutta la parte di se e z giustamente manca, devo aggiungere altro?
 critical_cor <- function(r = NULL, n, 
                          conf.level = 0.95, 
                          hypothesis = c("two.sided", "greater", "less"), 
@@ -495,7 +520,13 @@ critical_cor <- function(r = NULL, n,
 #' @export
 #'
 #' @examples
-# TODO manca esempio
+#' # critical value from sample size and standard errors of the parameters
+#' n <- 170
+#' p = 3
+#' seb <- c(25,.25,.10)
+#' critical_coef(seb = seb,n = n, p = p)
+#' 
+# TODO controllare esempio
 critical_coef <- function(seb, n = NULL, p = NULL,df = NULL,
                              conf.level = 0.95,
                              hypothesis = c("two.sided", "greater", "less"),
