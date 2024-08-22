@@ -128,7 +128,7 @@ To provide more tangible illustrations of the practical applications of critical
 
 # How to Compute Critical Effect Size Values
 
-In this section, we provide guidance and formulas for computing critical effect size values in general, with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's $d$), correlations (Pearson's r), and raw and standardized coefficients in linear models. These formulas have been incorporated into R functions of the package "criticalESvalue" accessible at: https://github.com/psicostat/criticalESvalue, and are elaborated upon in the subsequent section.
+In this section, we provide guidance and formulas for computing critical effect size values in general, with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's $d$), correlations (Pearson's r), and raw and standardized coefficients in linear models. These formulas have been incorporated into R functions of the package `criticalESvalue` accessible at: [https://github.com/psicostat/criticalESvalue](https://github.com/psicostat/criticalESvalue), and are elaborated upon in the subsequent section.
 
 ## t-test
 
