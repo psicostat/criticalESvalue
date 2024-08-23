@@ -45,8 +45,22 @@ critical_t2s(
 \item{conf.level}{the confidence level to set the confidence interval, default is set to 0.95.}
 }
 \value{
-the output returns, based on the inserted values, means of the two groups, standard deviations, numerosity of the two groups, confidence interval, hypothesis, standard error, degrees of freedom and the set parameter for var.equal or the t-value, numerosity of the two groups, standard error, confidence interval, hypothesis and the set parameter for var.equal.
+the output returns a \code{d} which is the Cohen's d, the critical d (\code{dc}) which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{se} which is the standard error, \code{df} are the degrees of freedom, then it also gives the \code{g} and \code{gc} which are respectively \code{d} and \code{dc} with Hedfer's Correction for small samples.
 }
 \description{
 The function allows to calculate cohen's d and critical d for a two samples t-test.
+}
+\examples{
+# critical value from summary statistics
+m1 <- 0.5
+m2 <- 1.0
+sd1 <- 1
+sd2 <- 1.5
+n1 <- 30
+n2 <- 35
+critical_t2s(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, n1 = n1, n2 = n2)
+# critical value from the t statistic
+se <- sqrt(sd1^2 / n1 + sd2^2 / n2)
+t <- (m1 - m2) / se
+critical_t2s(t = t, n1 = n1, n2 = n2, se = se) # se only required for calculating bc
 }

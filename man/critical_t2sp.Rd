@@ -39,8 +39,21 @@ critical_t2sp(
 \item{conf.level}{the confidence level to set the confidence interval, default is set to 0.95.}
 }
 \value{
-the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence interval.
+the output returns a \code{dz} which is the critical Cohen's d standartized on the standard deviation of the differences, the \code{dzc} is the critical standardized d using the pooled standard deviation, the \code{d} is the Cohen's d, the \code{dc} is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{se} is the standard error, \code{df} are the degrees of freedom,the \code{g} and \code{gc} are respectively \code{d} and \code{dc} with Hedger's Correction for small samples and \code{gz} and \code{gzc} are the standardized ones.
 }
 \description{
 The function allows to calculate the standardized cohen's d, the critical standardized cohen's d, the cohen's d and the critical d for a paired two samples t-test.
+}
+\examples{
+# critical value from summary statistics
+m1 <- 0.5
+m2 <- 1.0
+sd1 <- 1
+sd2 <- 1.5
+n <- 30
+critical_t2sp(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, n = n)
+# critical value from the t statistic
+se <- sqrt(sd1^2 / n1 + sd2^2 / n2)
+t <- (m1 - m2) / se
+critical_t2sp(t = t, n = n, se = se) # se only required for calculating bc
 }

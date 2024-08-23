@@ -35,3 +35,11 @@ the output returns the critical beta and the test used (either t or z).
 \description{
 This function allows to calculate the critical beta.
 }
+\examples{
+# critical value from sample size and standard errors of the parameters
+n <- 170
+p = 3
+seb <- c(25,.25,.10)
+critical_coef(seb = seb,n = n, p = p)
+
+}

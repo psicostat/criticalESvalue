@@ -29,3 +29,10 @@ critical_cor(
 \description{
 This function allows to calculate the critical correlation value. When using \code{test = "t"}, the critical value is calculated assuming a Student t distribution with \eqn{n - 2} degrees of freedom and the standard error calculated using the raw correlation coefficient. When \code{test = "z"}, the critical value is calculated assimong a standard Normal distribution and the standard error is calculated applying the Fisher's z transformation.
 }
+\examples{
+# critical value from r and sample size
+r <- .25
+n <- 30
+critical_cor(r = r, n = n )
+
+}
