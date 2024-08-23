@@ -404,14 +404,14 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
 #'
 #' @examples
 #' # critical value from summary statistics
-#' m1 <- 0.5
-#' m2 <- 1.0
-#' sd1 <- 1
-#' sd2 <- 1.5
+#' m1 <- 10
+#' m2 <- 15
+#' sd1 <- 5
+#' sd2 <- 4.25
 #' n <- 30
 #' critical_t2sp(m1 = m1, m2 = m2, sd1 = sd1, sd2 = sd2, n = n)
 #' # critical value from the t statistic
-#' se <- sqrt(sd1^2 / n1 + sd2^2 / n2)
+#' se <- sqrt((sd1^2 + sd2^2) / n)
 #' t <- (m1 - m2) / se
 #' critical_t2sp(t = t, n = n, se = se) # se only required for calculating bc
 # TODO controllare formula dell'esemptio from t test
