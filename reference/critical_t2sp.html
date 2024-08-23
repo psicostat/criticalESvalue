@@ -102,9 +102,61 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>the output returns, based on the inserted values, means of the two groups, standard deviations of the two groups, numerosity, standard error, correlation between the variables, confidence level and hypothesis or t-value, numerosity, standard error, correlation between the variables, hypothesis and confidence interval.</p>
+    <p>the output returns a <code>dz</code> which is the critical Cohen's d standartized on the standard deviation of the differences, the <code>dzc</code> is the critical standardized d using the pooled standard deviation, the <code>d</code> is the Cohen's d, the <code>dc</code> is the minimum value for which to get a significant result with a given sample, the <code>bc</code> is the numerator of the formula from which the d is calculated, <code>se</code> is the standard error, <code>df</code> are the degrees of freedom,the <code>g</code> and <code>gc</code> are respectively <code>d</code> and <code>dc</code> with Hedger's Correction for small samples and <code>gz</code> and <code>gzc</code> are the standardized ones.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># critical value from summary statistics</span></span></span>
+<span class="r-in"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></span>
+<span class="r-in"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fl">1.0</span></span></span>
+<span class="r-in"><span><span class="va">sd1</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">sd2</span> <span class="op">&lt;-</span> <span class="fl">1.5</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">30</span></span></span>
+<span class="r-in"><span><span class="fu">critical_t2sp</span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">m1</span>, m2 <span class="op">=</span> <span class="va">m2</span>, sd1 <span class="op">=</span> <span class="va">sd1</span>, sd2 <span class="op">=</span> <span class="va">sd2</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>when m2 and sd2 are provided and r12 is NULL dz and dzc and cannot be computed, returning NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $dz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.2773501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $dzc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3734061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.3922323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $dc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.528076</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.6731675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3291403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $g</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.3819852</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.51428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.2701043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gzc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3636509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># critical value from the t statistic</span></span></span>
+<span class="r-in"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">sd1</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n1</span> <span class="op">+</span> <span class="va">sd2</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n2</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'n1' not found</span>
+<span class="r-in"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">m1</span> <span class="op">-</span> <span class="va">m2</span><span class="op">)</span> <span class="op">/</span> <span class="va">se</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'se' not found</span>
+<span class="r-in"><span><span class="fu">critical_t2sp</span><span class="op">(</span>t <span class="op">=</span> <span class="va">t</span>, n <span class="op">=</span> <span class="va">n</span>, se <span class="op">=</span> <span class="va">se</span><span class="op">)</span> <span class="co"># se only required for calculating bc</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in t * sqrt(1/n):</span> non-numeric argument to binary operator</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -90,6 +90,22 @@
     <p>the output returns the critical beta and the test used (either t or z).</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># critical value from sample size and standard errors of the parameters</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">170</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">=</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="va">seb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>,<span class="fl">.25</span>,<span class="fl">.10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">critical_coef</span><span class="op">(</span>seb <span class="op">=</span> <span class="va">seb</span>,n <span class="op">=</span> <span class="va">n</span>, p <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $bc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 49.3589441  0.4935894  0.1974358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "t"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
