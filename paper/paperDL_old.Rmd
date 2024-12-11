@@ -103,8 +103,6 @@ header-includes:
       {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
     \makeatother
     \usepackage{xcolor}
-    \newcommand{\bfilippo}{\color{blue}}
-    \newcommand{\efilippo}{\color{black}}
 ---
 
 ```{r setup, include=FALSE}
@@ -136,7 +134,7 @@ The second scenario involves the study by @kramer2014experimental, which explore
 
 # How to Compute Critical Effect Size Values
 
-\bfilippo In this section, we provide guidance and formulas for computing standardized critical effect size with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's $d$), correlations (Pearson's $r$), and raw and standardized coefficients in linear models. The same equations can be used to calculated unstandardized effect sizes that can be preferred in some situations (e.g., linear models). \efilippo These formulas have been incorporated into R functions of the package `criticalESvalue` accessible at: [https://github.com/psicostat/criticalESvalue](https://github.com/psicostat/criticalESvalue), and are elaborated upon in the subsequent section.
+In this section, we provide guidance and formulas for computing critical effect size values in general [BUT WE FOCUS ON STANDARDIZED, NOT RAW, EFFECT SIZES - SO WE EITHER GIVE A REASON FOR THIS, OR WE ALSO ADD RAW EFFECTS], with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's $d$), correlations (Pearson's $r$), and raw and standardized coefficients in linear models. These formulas have been incorporated into R functions of the package `criticalESvalue` accessible at: [https://github.com/psicostat/criticalESvalue](https://github.com/psicostat/criticalESvalue), and are elaborated upon in the subsequent section.
 
 ## t-test
 
@@ -147,15 +145,16 @@ For the t-test we considered the two-sample, paired, and one-sample tests. As a 
     t = \frac{b}{\text{SE}_{b}}
 \end{equation}
 
-Where $b$ is the unstandardized effect size that depends on the type of test. \bfilippo For example, in the two sample $t$-test the numerator is the difference between the two sample means while in the one-sample case is the difference between the sample mean and the population value. The denominator is the standard error of the numerator that depends on the sample size and the samples variances. \efilippo
+Where $b$ is the unstandardized effect size that depends on the type of test. [THE NEXT SENTENCE NEEDS TO BE REWRITTEN] For example, in the two sample $t$-test or the single mean for a one sample $t$-test. The denominator is the standard error of the numerator that depends on the sample size and the sample(s) variance.
 
-\bfilippo
-Equation \@ref(eq:eq-gen-d) describe a general formulation of a standardized effect size measure. Where $b$ is the unstandardized effect size (e.g., the difference between two means) and $s$ is the standardization term \efilippo. For example, in the two-samples case, $s$ is the pooled standard deviation between the two samples, while in the paired samples case, $s$ is the standard deviation of the differences for paired samples.
+Similarly, Equation \@ref(eq:eq-gen-d) [REWRITE THE REST OF THIS SENTENCE] formalize a general form of the effect size.
 
 \begin{equation}
     (\#eq:eq-gen-d)
     d = \frac{b}{s}
 \end{equation}
+
+Where $b$ is the unstandardized effect size and $s$ is the standardization term. For example, in the two-sample case, $s$ is the pooled standard deviation between the two samples, while in the paired samples case, $s$ is the standard deviation of the differences for paired samples.
 
 The critical $t_c$ is the test statistic associated with a p-value equal or lower to $\alpha$. Substituting $t_c$ into Equation \@ref(eq:eq-gen-t) we realize that there is a $b_c$ that with a certain $SE_b$ produce the critical test statistics. The general form of the critical effect size $d_c$ is defined in Equation \@ref(eq:eq-gen-crit). The $b_c$ is derived solving Equation \@ref(eq:eq-gen-t) for $b$.
 
@@ -168,11 +167,20 @@ The critical $t_c$ is the test statistic associated with a p-value equal or lowe
 \end{gathered}
 \end{equation}
 
+NOT SURE TO KEEP THIS! [DL: I THINK IT IS MAYBE FOR AN APPENDIX]
+
 Another way of conceptualizing the critical effect size is by removing the sample size from the $t$ statistics (see Equation \@ref(eq:eq-gen-t)). In fact, $SE_b$ can be generally defined as $\frac{s}{\sqrt{N}}$ where $s$ is the denominator in Equation \@ref(eq:eq-gen-d) and $n$ is the sample size. Thus, $d_c = t_c \times \frac{1}{\sqrt{n}}$ ($\frac{1}{\sqrt{n}}$ because the standard deviation of a standardized effect size is one by definition) is equivalent to \@ref(eq:eq-gen-crit). The only caveat is that calculating $d$ or $d_c$ in this way assume that the standard deviation used to calculate the test statistics and the effect size is the same. While this is true most of the time, as explained in the paired t-test section, there are more than one methods to calculate the (critical) effect size using different standard deviations. Furthemore, this method assume that the two groups (in case of a two-sample t-test) have the same size.
+
+
+
+
+
 
 ### One sample t-test
 
 For the one-sample $t$-test $b$ is the sample mean and $s$ is the sample standard deviation and $n$ is the sample size. $SE_b = \frac{s}{\sqrt{n}}$ and the $t_c$ is based on $n - 1$ degrees of freedom. Thus $b_c = t_c \times SE_b$ and $d_c = \frac{b_c}{s}$. Equivalently, $d_c = t_c \times \frac{1}{\sqrt{n}}$.
+
+
 
 ### Two-sample t-test
 
