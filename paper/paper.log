@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.5)  14 DEC 2024 15:38
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.5)  14 DEC 2024 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**paperDL.tex
-(./paperDL.tex
+**paper.tex
+(./paper.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (/usr/local/texlive/2023/texmf-dist/tex/latex
 /apa7/apa7.cls
@@ -947,8 +947,8 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
-(./paperDL.aux)
-\openout1 = `paperDL.aux'.
+(./paper.aux)
+\openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 260.
 LaTeX Font Info:    ... okay on input line 260.
@@ -1365,14 +1365,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [7]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[8] [9] [10] [11] [12] [13] [14]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 431.
-[15]
-Underfull \vbox (badness 4279) has occurred while \output is active []
+[8] [9] [10]
+Underfull \vbox (badness 6364) has occurred while \output is active []
 
-[16] [17]
-Underfull \vbox (badness 4752) has occurred while \output is active []
+[11]
+Underfull \vbox (badness 1152) has occurred while \output is active []
+
+[12] [13] [14]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 433.
+[15] [16]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[17]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [18] [19] [20]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1380,18 +1386,18 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [21]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22] AED endfloat: Processing end Figures and Tables [23] (./paperDL.aux)
+[22] AED endfloat: Processing end Figures and Tables [23] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
  34382 strings out of 476683
- 672099 string characters out of 5804048
- 1859018 words of memory out of 5000000
+ 672077 string characters out of 5804048
+ 1860018 words of memory out of 5000000
  54039 multiletter control sequences out of 15000+600000
  530470 words of font info for 78 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,121p,1916b,581s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,121p,1914b,441s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paperDL.pdf (23 pages).
+Output written on paper.pdf (23 pages).
