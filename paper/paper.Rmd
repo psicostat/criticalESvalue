@@ -3,6 +3,9 @@ title             : "The benefits of reporting critical effect size values"
 shorttitle        : "Reporting critical effect size values"
 author: 
   - name          : "Ambra Perugini"
+    corresponding: "yes"
+    address       : "Via Venezia 8, 35131, Padova, Italy"
+    email         : "ambra.perugini@phd.unipd.it"
     affiliation   : "1"
     role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
       - "Conceptualization"
@@ -22,6 +25,7 @@ author:
     role:
       - "Writing – Original Draft Preparation"
       - "Writing - Review & Editing"
+      - "Methodology"
       - "Software"
       - "Supervision"
   - name          : "Daniël Lakens"
@@ -50,9 +54,6 @@ author:
       - "Supervision"
   - name          : "Gianmarco Altoè"
     affiliation   : "1"
-    corresponding: "yes"
-    address       : "Via Venezia 8, 35131, Padova, Italy"
-    email         : "gianmarco.altoe@unipd.it"
     role:
       - "Conceptualization"
       - "Writing - Review & Editing"
