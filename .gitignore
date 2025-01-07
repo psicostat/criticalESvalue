@@ -52,4 +52,5 @@ rsconnect/
 inst/doc
 /doc/
 /Meta/
+local/
 docs

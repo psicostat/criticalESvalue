@@ -1,9 +1,0 @@
-# TODO
-
-- guardare tutti i TODO. Installa il pacchetto todor e fai todor::todor() e tutti i TODO compaiono puoi facilmente guardarli. Poi cancella il commento con TODO [ambra]
-
-- togliere riferimenti sul paper riguardo ai modelli lineari standardizzati, credo sia meglio non fare delle funzioni di standardizzazione ma dire semplicemente che fittando un modello su dati standardizzati si possono avere poi gli effect size critici dei beta e non semplicemente i beta critici [enrico]
-
-# NOTE
-
-- 22/08/2024: ho aggiornato il paper con criticalESvalue dove viene caricato e con il link giusto
