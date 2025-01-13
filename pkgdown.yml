@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   equations: equations.html
   example: example.html
-last_built: 2025-01-07T10:48Z
+last_built: 2025-01-13T13:18Z
 urls:
   reference: https://psicostat.github.io/criticalvalue/reference
   article: https://psicostat.github.io/criticalvalue/articles
