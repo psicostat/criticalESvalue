@@ -1,5 +1,5 @@
 ---
-title             : "The benefits of reporting critical effect size values"
+title             : "The benefits of reporting critical effect size values^[The manuscript as been posted as a pre-print and has not yet undergone peer-review.]"
 shorttitle        : "Reporting critical effect size values"
 author: 
   - name          : "Ambra Perugini"

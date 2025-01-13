@@ -40,6 +40,7 @@ This function allows to calculate the critical beta.
 n <- 170
 p = 3
 seb <- c(25,.25,.10)
+# seb is an hypothetical vector of standard errors from summary() of an lm() model 
 critical_coef(seb = seb,n = n, p = p)
 
 }
