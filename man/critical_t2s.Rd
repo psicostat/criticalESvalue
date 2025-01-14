@@ -45,7 +45,7 @@ critical_t2s(
 \item{conf.level}{the confidence level to set the confidence interval, default is set to 0.95.}
 }
 \value{
-the output returns a \code{d} which is the Cohen's d, the critical d (\code{dc}) which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{se} which is the standard error, \code{df} are the degrees of freedom, then it also gives the \code{g} and \code{gc} which are respectively \code{d} and \code{dc} with Hedfer's Correction for small samples.
+the output returns a \code{d} which is the Cohen's d, the critical d (\code{dc}) which is the minimum value for which to get a significant result with a given sample, the \code{bc} is the numerator of the formula from which the d is calculated, \code{se} which is the standard error, \code{df} are the degrees of freedom, then it also gives the \code{g} and \code{gc} which are respectively \code{d} and \code{dc} with Hedges's correction for small samples.
 }
 \description{
 The function allows to calculate cohen's d and critical d for a two samples t-test.
