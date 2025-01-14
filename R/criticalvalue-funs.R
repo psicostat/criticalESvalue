@@ -327,7 +327,7 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #'
-#' @return the output returns a `d` which is the Cohen's d, the critical d (`dc`) which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` which is the standard error, `df` are the degrees of freedom, then it also gives the `g` and `gc` which are respectively `d` and `dc` with Hedfer's Correction for small samples.
+#' @return the output returns a `d` which is the Cohen's d, the critical d (`dc`) which is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` which is the standard error, `df` are the degrees of freedom, then it also gives the `g` and `gc` which are respectively `d` and `dc` with Hedges's correction for small samples.
 #' @export
 #'
 #' @examples
@@ -344,7 +344,6 @@ critical_t1s <- function(m = NULL, s = NULL, t = NULL,
 #' t <- (m1 - m2) / se
 #' critical_t2s(t = t, n1 = n1, n2 = n2, se = se) # se only required for calculating bc
 
-# TODO controllare formula dell'esemptio from t test
 critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
                          sd1 = NULL, sd2 = NULL,
                          n1, n2, se = NULL,
@@ -399,7 +398,7 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
 #' @param hypothesis a character string indicating the alternative hypothesis ("less", "greater" or "two.tailed").
 #' @param conf.level the confidence level to set the confidence interval, default is set to 0.95.
 #'
-#' @return the output returns a `dz` which is the critical Cohen's d standartized on the standard deviation of the differences, the `dzc` is the critical standardized d using the pooled standard deviation, the `d` is the Cohen's d, the `dc` is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` is the standard error, `df` are the degrees of freedom,the `g` and `gc` are respectively `d` and `dc` with Hedger's Correction for small samples and `gz` and `gzc` are the standardized ones.  
+#' @return the output returns a `dz` which is the critical Cohen's d standartized on the standard deviation of the differences, the `dzc` is the critical standardized d using the pooled standard deviation, the `d` is the Cohen's d, the `dc` is the minimum value for which to get a significant result with a given sample, the `bc` is the numerator of the formula from which the d is calculated, `se` is the standard error, `df` are the degrees of freedom,the `g` and `gc` are respectively `d` and `dc` with Hedges's Correction for small samples and `gz` and `gzc` are the standardized ones.  
 #' @export
 #'
 #' @examples
@@ -414,7 +413,7 @@ critical_t2s <- function(m1 = NULL, m2 = NULL, t = NULL,
 #' se <- sqrt((sd1^2 + sd2^2) / n)
 #' t <- (m1 - m2) / se
 #' critical_t2sp(t = t, n = n, se = se) # se only required for calculating bc
-# TODO controllare formula dell'esemptio from t test
+
 critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
                           sd1 = NULL, sd2 = NULL, r12 = NULL,
                           n, se = NULL,
@@ -461,9 +460,9 @@ critical_t2sp <- function(m1 = NULL, m2 = NULL, t = NULL,
 #' # critical value from r and sample size
 #' r <- .25
 #' n <- 30
-#' critical_cor(r = r, n = n )
+#' critical_cor(r = r, n = n, test = "t")
+#' critical_cor(r = r, n = n, test = "z") # using Fisher's z transformation
 #' 
-# TODO non so se qui dovevo farne anche altri, comunque tutta la parte di se e z giustamente manca, devo aggiungere altro?
 critical_cor <- function(r = NULL, n, 
                          conf.level = 0.95, 
                          hypothesis = c("two.sided", "greater", "less"), 
@@ -525,9 +524,13 @@ critical_cor <- function(r = NULL, n,
 #' p = 3
 #' seb <- c(25,.25,.10)
 #' # seb is an hypothetical vector of standard errors from summary() of an lm() model 
-#' critical_coef(seb = seb,n = n, p = p)
-#' 
-# TODO controllare esempio
+#' critical_coef(seb = seb, n = n, p = p)
+#' # using a fitted model
+#' fit <- lm(mpg ~ disp + hp, data = mtcars)
+#' fits <- summary(fit)
+#' seb <- fits$coefficients[, "Std. Error"]
+#' critical_coef(seb = seb, n = nrow(fit$model), p = ncol(fit$model) - 1)
+
 critical_coef <- function(seb, n = NULL, p = NULL,df = NULL,
                              conf.level = 0.95,
                              hypothesis = c("two.sided", "greater", "less"),
