@@ -1,0 +1,73 @@
+---
+title: "formula-syntax"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{formula-syntax}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(criticalESvalue)
+```
+
+In this vignette we illustrate a problem when using the `critical()` function with some models. In particular, all models of class `htest` (e.g., `t.test`, `cor.test`, etc.) do not store the dataset within the output list. On the other side, the `lm` function for example return a list of class `lm` that contains the dataset (`$model`).
+
+```{r}
+fit_ttest <- t.test(mpg ~ am, data = mtcars)
+fit_lm <- lm(Sepal.Length ~ Petal.Width, data = iris)
+
+class(fit_ttest)
+class(fit_lm)
+
+str(fit_ttest, max.level = 1)
+head(fit_lm$model)
+```
+
+The `criticalESvalue`, in particular the `critical.*` functions use the `insigth::get_data()` function to retrieve the source dataset from the environment or the output list.
+
+This works perfectly when the object contains the dataset as in `lm`:
+
+```{r}
+head(insight::get_data(fit_lm))
+```
+
+However, in the `htest` class the function sometimes fails. In particular, when using e.g., `t.test` with the formula syntax `y ~ x` and the `data = ` argument, `insight::get_data()` is not able to retrieve the dataset and return `NULL`. We included an error message suggesting to change the function call.
+
+```{r, error=TRUE}
+insight::get_data(fit_ttest)
+critical(fit_ttest)
+```
+
+To fix this problem, you can simply change the function call. There are several options:
+
+```{r}
+# formula without data
+fit_ttest_1 <- t.test(mtcars$mpg ~ mtcars$am)
+
+# x and y without data
+fit_ttest_2 <- t.test(mtcars$mpg[mtcars$am == 0], mtcars$mpg[mtcars$am == 1]) 
+
+# creating variables in the global environment, not recommended
+
+x <- mtcars$mpg[mtcars$am == 0]
+y <- mtcars$mpg[mtcars$am == 1]
+fit_ttest_3 <- t.test(x, y)
+```
+
+With these options, the `critical()` function will not fail:
+
+```{r}
+critical(fit_ttest_1)
+critical(fit_ttest_2)
+critical(fit_ttest_3)
+```
+
+If we found a stable and reliable workaround to handle `htest` objects, this behaviour could change in future versions of the package.
