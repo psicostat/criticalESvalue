@@ -28,7 +28,7 @@ critical.htest <- function(x, ...){
     D <- insight::get_data(x)
     
     if(is.null(D)){
-      stop("insight::get_data(x) returning NULL. Are you using the formula syntax (y ~ x)? This syntax is not supported yet")
+      stop("insight::get_data(x) returning NULL. Are you using the formula syntax (y ~ x) with the data = argument? This syntax is not supported yet. See vignette('formula-syntax', package = 'criticalESvalue'). Try to call the function without the 'data = ' argument")
     }
     
     conf.level <- attributes(x$conf.int)$conf.level
