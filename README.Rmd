@@ -22,8 +22,9 @@ options(scipen = 999, digits = 5)
 
 # criticalESvalue
 
-The goal of `criticalESvalue` is to ...
-<!-- TODO aggiungi qualche riga qui -->
+The `criticalESvalue` package provide a set of functions to calculate the critical effects size value for the common statistical model. Currently, the package support the `htest` class (i.e., `t.test` and `cor.test`), the `lm` class and the `rma` class from the `metafor` package.
+
+The package contains a set of functions to work with summary data and the `critical()` method that takes objects of class `htest`, `lm` or `rma` and provide enhanced printing and summary methods with information about critical effects size.
 
 ## Installation
 

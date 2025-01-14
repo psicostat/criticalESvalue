@@ -8,12 +8,20 @@
 
 # criticalESvalue
 
-The goal of `criticalESvalue` is to …
-<!-- TODO aggiungi qualche riga qui -->
+The `criticalESvalue` package provide a set of functions to calculate
+the critical effects size value for the common statistical model.
+Currently, the package support the `htest` class (i.e., `t.test` and
+`cor.test`), the `lm` class and the `rma` class from the `metafor`
+package.
+
+The package contains a set of functions to work with summary data and
+the `critical()` method that takes objects of class `htest`, `lm` or
+`rma` and provide enhanced printing and summary methods with information
+about critical effects size.
 
 ## Installation
 
-You can install the development version of criticalESvalue like so:
+You can install the development version of `criticalESvalue` like so:
 
 ``` r
 # require(remotes)
@@ -41,17 +49,17 @@ critical(ttest)
 #>  Welch Two Sample t-test
 #> 
 #> data:  x and y
-#> t = 2.93, df = 57, p-value = 0.0049
+#> t = 1.8, df = 57.7, p-value = 0.077
 #> alternative hypothesis: true difference in means is not equal to 0
 #> 95 percent confidence interval:
-#>  0.21597 1.14895
+#>  -0.055794  1.065374
 #> sample estimates:
 #> mean of x mean of y 
-#>   0.44086  -0.24160 
+#>   0.36937  -0.13542 
 #> 
 #> |== Effect Size and Critical Value ==| 
-#> d = 0.7564 dc = ± 0.51704 bc = ± 0.46649 
-#> g = 0.7464 gc = ± 0.5102
+#> d = 0.46545 dc = ± 0.51689 bc = ± 0.56058 
+#> g = 0.45937 gc = ± 0.51014
 
 # t-test (standard)
 
@@ -61,17 +69,17 @@ critical(ttest)
 #>  Two Sample t-test
 #> 
 #> data:  x and y
-#> t = 2.93, df = 58, p-value = 0.0048
+#> t = 1.8, df = 58, p-value = 0.077
 #> alternative hypothesis: true difference in means is not equal to 0
 #> 95 percent confidence interval:
-#>  0.21614 1.14877
+#>  -0.055739  1.065319
 #> sample estimates:
 #> mean of x mean of y 
-#>   0.44086  -0.24160 
+#>   0.36937  -0.13542 
 #> 
 #> |== Effect Size and Critical Value ==| 
-#> d = 0.7564 dc = ± 0.51684 bc = ± 0.46631 
-#> g = 0.74657 gc = ± 0.51012
+#> d = 0.46545 dc = ± 0.51684 bc = ± 0.56053 
+#> g = 0.4594 gc = ± 0.51012
 
 # t-test (standard) with monodirectional hyp
 
@@ -81,42 +89,42 @@ critical(ttest)
 #>  Two Sample t-test
 #> 
 #> data:  x and y
-#> t = 2.93, df = 58, p-value = 1
+#> t = 1.8, df = 58, p-value = 0.96
 #> alternative hypothesis: true difference in means is less than 0
 #> 95 percent confidence interval:
-#>    -Inf 1.0719
+#>     -Inf 0.97286
 #> sample estimates:
 #> mean of x mean of y 
-#>   0.44086  -0.24160 
+#>   0.36937  -0.13542 
 #> 
 #> |== Effect Size and Critical Value ==| 
-#> d = 0.7564 dc = -0.43159 bc = -0.3894 
-#> g = 0.74657 gc = -0.42598
+#> d = 0.46545 dc = -0.43159 bc = -0.46807 
+#> g = 0.4594 gc = -0.42598
 
 # within the t-test object saved from critical we have all the new values
 
 ttest <- critical(ttest)
 str(ttest)
 #> List of 15
-#>  $ statistic  : Named num 2.93
+#>  $ statistic  : Named num 1.8
 #>   ..- attr(*, "names")= chr "t"
 #>  $ parameter  : Named num 58
 #>   ..- attr(*, "names")= chr "df"
-#>  $ p.value    : num 0.998
-#>  $ conf.int   : num [1:2] -Inf 1.07
+#>  $ p.value    : num 0.962
+#>  $ conf.int   : num [1:2] -Inf 0.973
 #>   ..- attr(*, "conf.level")= num 0.95
-#>  $ estimate   : Named num [1:2] 0.441 -0.242
+#>  $ estimate   : Named num [1:2] 0.369 -0.135
 #>   ..- attr(*, "names")= chr [1:2] "mean of x" "mean of y"
 #>  $ null.value : Named num 0
 #>   ..- attr(*, "names")= chr "difference in means"
-#>  $ stderr     : num 0.233
+#>  $ stderr     : num 0.28
 #>  $ alternative: chr "less"
 #>  $ method     : chr " Two Sample t-test"
 #>  $ data.name  : chr "x and y"
-#>  $ g          : num 0.747
+#>  $ g          : num 0.459
 #>  $ gc         : num 0.426
-#>  $ d          : num 0.756
-#>  $ bc         : num 0.389
+#>  $ d          : num 0.465
+#>  $ bc         : num 0.468
 #>  $ dc         : num 0.432
 #>  - attr(*, "class")= chr [1:3] "critvalue" "ttest" "htest"
 ```
@@ -144,13 +152,13 @@ critical(ctest)
 #>  Pearson's product-moment correlation
 #> 
 #> data:  x and y
-#> t = 0.388, df = 28, p-value = 0.7
+#> t = 0.257, df = 28, p-value = 0.8
 #> alternative hypothesis: true correlation is not equal to 0
 #> 95 percent confidence interval:
-#>  -0.29490  0.42228
+#>  -0.31735  0.40172
 #> sample estimates:
 #>      cor 
-#> 0.073142 
+#> 0.048461 
 #> 
 #> |== Critical Value ==| 
 #> |rc| = 0.36101
@@ -173,32 +181,32 @@ fit
 #> 
 #> Coefficients:
 #> (Intercept)            x            q            z  
-#>     -0.2201       0.0107      -0.1969       0.0602  
+#>    -0.11680      0.06495     -0.13635      0.00332  
 #> 
 #> 
 #> Critical |Coefficients| 
 #> 
 #> (Intercept)           x           q           z 
-#>     0.42311     0.39527     0.47312     0.54343
+#>     0.48599     0.43970     0.50174     0.39505
 summary(fit)
 #> 
 #> Call:
 #> lm(formula = y ~ x + q + z, data = dat)
 #> 
 #> Residuals:
-#>    Min     1Q Median     3Q    Max 
-#> -1.324 -0.547 -0.102  0.249  1.608 
+#>     Min      1Q  Median      3Q     Max 
+#> -1.8786 -0.9037 -0.0576  0.8473  2.3993 
 #> 
 #> Coefficients:
 #>             Estimate |Critical Estimate| Std. Error t value Pr(>|t|)
-#> (Intercept)  -0.2201              0.4231     0.2058   -1.07     0.29
-#> x             0.0107              0.3953     0.1923    0.06     0.96
-#> q            -0.1969              0.4731     0.2302   -0.86     0.40
-#> z             0.0602              0.5434     0.2644    0.23     0.82
+#> (Intercept) -0.11680             0.48599    0.23643   -0.49     0.63
+#> x            0.06495             0.43970    0.21391    0.30     0.76
+#> q           -0.13635             0.50174    0.24409   -0.56     0.58
+#> z            0.00332             0.39505    0.19219    0.02     0.99
 #> 
-#> Residual standard error: 0.872 on 26 degrees of freedom
-#> Multiple R-squared:  0.0329, Adjusted R-squared:  -0.0787 
-#> F-statistic: 0.295 on 3 and 26 DF,  p-value: 0.829
+#> Residual standard error: 1.17 on 26 degrees of freedom
+#> Multiple R-squared:  0.0162, Adjusted R-squared:  -0.0973 
+#> F-statistic: 0.143 on 3 and 26 DF,  p-value: 0.933
 ```
 
 ### Meta-analysis
@@ -261,47 +269,47 @@ n1 <- n2 <- 30
 
 critical_t2s(m1, m2, sd1 = sd1, sd2 = sd2, n1 = n1, n2 = n2)
 #> $d
-#> [1] 0.77423
+#> [1] -0.023955
 #> 
 #> $dc
-#> [1] 0.51698
+#> [1] 0.51721
 #> 
 #> $bc
-#> [1] 0.54906
+#> [1] 0.52285
 #> 
 #> $se
-#> [1] 0.27422
+#> [1] 0.26102
 #> 
 #> $df
-#> [1] 57.277
+#> [1] 56.144
 #> 
 #> $g
-#> [1] 0.76404
+#> [1] -0.023633
 #> 
 #> $gc
-#> [1] 0.51018
+#> [1] 0.51026
 
 critical_t2s(t = ttest$statistic, se = ttest$stderr, n1 = n1, n2 = n2)
 #> Warning in crit_from_t_t2s(t = t, n1 = n1, n2 = n2, se = se, conf.level =
 #> conf.level, : When var.equal = FALSE the critical value calculated from t
 #> assume sd1 = sd2!
 #> $d
-#> [1] 0.77423
+#> [1] -0.023955
 #> 
 #> $dc
 #> [1] 0.51684
 #> 
 #> $bc
-#> [1] 0.54891
+#> [1] 0.52248
 #> 
 #> $se
-#> [1] 0.27422
+#> [1] 0.26102
 #> 
 #> $df
 #> [1] 58
 #> 
 #> $g
-#> [1] 0.76417
+#> [1] -0.023643
 #> 
 #> $gc
 #> [1] 0.51012
@@ -313,7 +321,7 @@ critical_t2s(t = ttest$statistic, n1 = n1, n2 = n2)
 #> Warning in crit_from_t_t2s(t = t, n1 = n1, n2 = n2, se = se, conf.level =
 #> conf.level, : When se = NULL bc cannot be computed, returning NA!
 #> $d
-#> [1] 0.77423
+#> [1] -0.023955
 #> 
 #> $dc
 #> [1] 0.51684
@@ -328,7 +336,7 @@ critical_t2s(t = ttest$statistic, n1 = n1, n2 = n2)
 #> [1] 58
 #> 
 #> $g
-#> [1] 0.76417
+#> [1] -0.023643
 #> 
 #> $gc
 #> [1] 0.51012
