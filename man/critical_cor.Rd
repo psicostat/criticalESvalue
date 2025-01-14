@@ -33,6 +33,7 @@ This function allows to calculate the critical correlation value. When using \co
 # critical value from r and sample size
 r <- .25
 n <- 30
-critical_cor(r = r, n = n )
+critical_cor(r = r, n = n, test = "t")
+critical_cor(r = r, n = n, test = "z") # using Fisher's z transformation
 
 }
