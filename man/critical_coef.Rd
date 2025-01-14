@@ -41,6 +41,10 @@ n <- 170
 p = 3
 seb <- c(25,.25,.10)
 # seb is an hypothetical vector of standard errors from summary() of an lm() model 
-critical_coef(seb = seb,n = n, p = p)
-
+critical_coef(seb = seb, n = n, p = p)
+# using a fitted model
+fit <- lm(mpg ~ disp + hp, data = mtcars)
+fits <- summary(fit)
+seb <- fits$coefficients[, "Std. Error"]
+critical_coef(seb = seb, n = nrow(fit$model), p = ncol(fit$model) - 1)
 }
