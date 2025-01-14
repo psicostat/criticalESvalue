@@ -15,17 +15,19 @@ knitr::opts_chunk$set(
 options(scipen = 999, digits = 5)
 ```
 
-# criticalESvalue
-
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/psicostat/criticalESvalue/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/psicostat/criticalESvalue/actions/workflows/R-CMD-check.yaml)
+[![test-coverage](https://github.com/psicostat/criticalESvalue/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/psicostat/criticalESvalue/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
-The goal of criticalvalue is to ...
+# criticalESvalue
+
+The goal of `criticalESvalue` is to ...
 <!-- TODO aggiungi qualche riga qui -->
 
 ## Installation
 
-You can install the development version of criticalESvalue like so:
+You can install the development version of `criticalESvalue` like so:
 
 ``` r
 # require(remotes)
