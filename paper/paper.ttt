@@ -1,0 +1,26 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{tab:unnamed-chunk-1}Summary of the critical effect size equations.}
+\centering
+\begin{tabular}[t]{ll}
+\toprule
+\textbf{Model} & \textbf{Equation}\\
+\midrule
+One-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s}$\\
+\cmidrule{1-2}
+ & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
+\cmidrule{2-2}
+\multirow{-2}{*}{\raggedright\arraybackslash Paired t-test} & $d_{z_c} = \frac{t_c \times \mbox{SE}_b}{s_D}$\\
+\cmidrule{1-2}
+Between-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
+\cmidrule{1-2}
+ & $r_c = \frac{t_c}{\sqrt{n - 2 + t^2_c}}$\\
+\cmidrule{2-2}
+\multirow{-2}{*}{\raggedright\arraybackslash Correlation} & $r_{z_c} = \frac{z_c}{\sqrt{n - 3}}$\\
+\cmidrule{1-2}
+Meta-analysis/Regression & $\beta_c = t_c \times \mbox{SE}_{\beta}$\\
+\bottomrule
+\end{tabular}
+\end{table*}
