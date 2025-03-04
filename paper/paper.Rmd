@@ -269,28 +269,26 @@ Meta-analysis allows to pool information from multiple studies related to a spec
 
 Despite the fact that we discussed only linear models, the same approach could be applied to other types of models such as generalized linear models. In fact, we simply need to multiply the critical value of the chosen distribution (e.g., $t$ or $z$) by the standard error of the regression coefficient. For example, in a logistic regression with a binary predictor the estimated regression coefficient is the (log) odds ratio. We can obtain the critical odds ratio by multiplying the critical $z$ statistics (the default in R with the `glm` function) with the standard error of the regression coefficient.
 
-
-
-```{r eqsummary, echo=FALSE, tab.cap="Summary of the critical effect size equations, see text for details."}
+```{r eqsummary, echo=FALSE, tab.cap="Summary of the critical effect size equations, see text for details. When possible, we also included the equation to calculate the critical effect size without computing the standard error. For the paired t-test, this is feasible when using the standard deviation of differences. For the two-sample t-test, it is possible only under the assumption of homogeneity of variances."}
 library(kableExtra)
 
 eqs <- data.frame(
   stringsAsFactors = FALSE,
-             Model = c("One-sample t-test",
-                       "Paired t-test","Paired t-test","Between-sample t-test",
-                       "Correlation","Correlation","Meta-analysis/Regression"),
-         Numerator = c("$b_c = t_c \\times \\mbox{SE}_b$","$b_c = t_c \\times \\mbox{SE}_b$",
-                       "$b_{z_c} = t_c \\times \\mbox{SE}_b$",
-                       "$b_c = t_c \\times \\mbox{SE}_b$",
-                       "$r_c = \\frac{t_c}{\\sqrt{n - 2 + t^2_c}}$","$r_{z_c} = \\frac{z_c}{\\sqrt{n - 3}}$",
-                       "$\\beta_c = t_c \\times \\mbox{SE}_{\\beta}$"),
-       Denominator = c("$s$", NA, "$s_D$", "$s_p$", NA, NA, NA),
-          Equation = c("$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s}$",
-                       "$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s_p}$",
-                       "$d_{z_c} = \\frac{t_c \\times \\mbox{SE}_b}{s_D}$",
-                       "$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s_p}$",
-                       "$r_c = \\frac{t_c}{\\sqrt{n - 2 + t^2_c}}$","$r_{z_c} = \\frac{z_c}{\\sqrt{n - 3}}$",
-                       "$\\beta_c = t_c \\times \\mbox{SE}_{\\beta}$")
+  Model = c("One-sample t-test",
+            "Paired t-test","Paired t-test","Between-sample t-test",
+            "Correlation test","Correlation","Meta-analysis/Regression"),
+  Numerator = c("$b_c = t_c \\times \\mbox{SE}_b$","$b_c = t_c \\times \\mbox{SE}_b$",
+                "$b_{z_c} = t_c \\times \\mbox{SE}_b$",
+                "$b_c = t_c \\times \\mbox{SE}_b$",
+                "$r_c = \\frac{t_c}{\\sqrt{n - 2 + t^2_c}}$","$r_{z_c} = \\frac{z_c}{\\sqrt{n - 3}}$",
+                "$\\beta_c = t_c \\times \\mbox{SE}_{\\beta}$"),
+  Denominator = c("$s$", NA, "$s_D$", "$s_p$", NA, NA, NA),
+  Equation = c("$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s} = t_c\\sqrt{\\frac{1}{n}}$",
+               "$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s_p}$",
+               "$d_{z_c} = \\frac{t_c \\times \\mbox{SE}_b}{s_D} = t_c\\sqrt{\\frac{1}{n}}$",
+               "$d_c = \\frac{t_c \\times \\mbox{SE}_b}{s_p} = t_c\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$",
+               "$r_c = \\frac{t_c}{\\sqrt{n - 2 + t^2_c}}$","$r_{z_c} = \\frac{z_c}{\\sqrt{n - 3}}$",
+               "$\\beta_c = t_c \\times \\mbox{SE}_{\\beta}$")
 )
 
 eqs |> 

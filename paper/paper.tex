@@ -94,36 +94,60 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \ifLuaTeX
 \usepackage[bidi=basic]{babel}
@@ -217,7 +241,7 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -260,8 +284,7 @@ Null hypothesis significance testing (NHST) remains the most prominent approach 
 
 We believe there are two clear benefits to reporting critical effect size values for a corresponding test. In the following sections we will illustrate examples of common scenarios and we will go through the main problems of certain research scenarios and possible solutions, highlighting the utility of critical effect size values in such contexts.
 
-\hypertarget{small-sample-sizes-and-uncertain-sample-size-determination}{%
-\subsection{Small Sample Sizes and Uncertain Sample Size Determination}\label{small-sample-sizes-and-uncertain-sample-size-determination}}
+\subsection{Small Sample Sizes and Uncertain Sample Size Determination}\label{small-sample-sizes-and-uncertain-sample-size-determination}
 
 First, when sample sizes are small, the critical effect size values inform readers about whether the effect sizes that could lead to rejecting the null hypothesis are in line with realistic expectations. If the sample size is small and only very large effects would yield a statistically significant result, and the underlying mechanism that is examined is unlikely to lead to such large effect sizes, researchers will realize they are not able to collect sufficient data to perform an informative hypothesis test. An a-priori power analysis would typically lead to a similar conclusion, but reporting critical effect size values will focus the attention more strongly on which effect sizes are reasonable to expect. In case of already conducted studies with small sample sizes it could be argued that it would be more informative to use retrospective design analysis (Altoè et al., 2020), but this would require both knowledge of the plausible effect size and/or the smallest effect size of interest (SESOI), which is the minimum effect that could be considered meaningful based on practical relevance, theoretical importance and/or specific research interests (Mesquida \& Lakens, 2024; Riesthuis, 2024), which are not always easy to determine. The use of critical effect size values can be used in a simple an efficient way to evaluate which findings could have not be found significant due to sample size limitations and based on the complexity of the test. Power analysis provides information about how likely it is to detect a specific effect size if it truly exists in the population. However, it does not indicate the minimum effect size required to reach statistical significance, which could provide additional insights into the strengths and limitations of a study design.
 
@@ -271,8 +294,7 @@ To provide a more tangible illustration of the practical applications of the cri
 
 Beyond critical effect size values, researchers should reason before conducting a study what conclusions can realistically be drawn from their experimental design. For example, as interaction effects are examined in addition to main effects, power may decrease because interactions are generally associated with smaller effect sizes, may require corrections for multiple tests, and interaction coefficients present larger standard errors than main effects coefficients. Such a reduction in statistical power may require a larger sample size to detect the effects of interest reliably. If this is not feasible, and sample size constraints make it impossible to detect significance for a plausible effect because it is smaller than the critical effect size value, alternative data collection strategies, such as multisite studies should be explored (Byers-Heinlein et al., 2020; Jarke et al., 2022; Moshontz et al., 2018; Sirois et al., 2023). Lastly, if participating in or leading a multisite study is not an option, researchers should evaluate whether collecting the sample for exploratory analysis without making inferences might still be valuable. Such data could later be included in a meta-analysis.
 
-\hypertarget{large-sample-sizes-and-meta-analysis}{%
-\subsection{Large Sample Sizes and Meta-analysis}\label{large-sample-sizes-and-meta-analysis}}
+\subsection{Large Sample Sizes and Meta-analysis}\label{large-sample-sizes-and-meta-analysis}
 
 When sample sizes are very large, the critical effect size values will make it clear that trivially small effect sizes will be statistically significant. Reporting critical effect size values will focus the attention of researchers on the difference between statistical significance and practical significance, and raises awareness of the importance to interpret the size of the effect. This is especially important in correlational studies with large sample sizes in psychology, where systematic but uncontrolled sources of variability may lead to significant but very small and meaningless non-zero effects, a phenomenon referred to as the `crud factor' (Orben \& Lakens, 2020).
 
@@ -284,13 +306,11 @@ A similar scenario may arise in a meta-analysis. Despite potential loss of preci
 
 Lastly, routinely reasoning about critical effect sizes, alongside the use of commonly known practices to enhance the quality of research (i.e.~power analysis, design analysis, data simulation etc.), will bring benefits to researchers by making it clear that significance is strictly related to the sample size, the alpha level and the statistic test used to analyse the data. Nevertheless, in educational settings, critical effect size values will help students to better grasp such concepts and therefore give a more critical approach to published research and for their future studies.
 
-\hypertarget{how-to-compute-critical-effect-size-values}{%
-\section{How to Compute Critical Effect Size Values}\label{how-to-compute-critical-effect-size-values}}
+\section{How to Compute Critical Effect Size Values}\label{how-to-compute-critical-effect-size-values}
 
 In this section, we provide guidance and formulas for computing standardized critical effect sizes with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's \(d\)), correlations (Pearson's \(r\)), and raw and standardized coefficients in linear models. Table \ref{tab:eqsummary} summarises those equations. The same equations can be used to calculate unstandardized effect sizes that can be preferred in some situations (e.g., linear models). These formulas have been incorporated into R functions of the package \texttt{criticalESvalue} accessible at: \url{https://github.com/psicostat/criticalESvalue}, and are elaborated upon in the subsequent section.
 
-\hypertarget{t-test}{%
-\subsection{\texorpdfstring{\(t\)-test}{t-test}}\label{t-test}}
+\subsection{\texorpdfstring{\(t\)-test}{t-test}}\label{t-test}
 
 For the \(t\)-test we considered the two-sample, paired, and one-sample tests. As a general approach the \(t\) statistic is computed as reported in Equation \eqref{eq:eq-gen-t}.
 
@@ -320,13 +340,11 @@ The critical \(t_c\) is the test statistic associated with a \(p\)-value equal o
 
 Another way of conceptualizing the critical effect size is by removing the sample size from the \(t\) statistics (see Equation \eqref{eq:eq-gen-t}). In fact, \(SE_b\) can be generally defined as \(\frac{s}{\sqrt{N}}\) where \(s\) is the denominator in Equation \eqref{eq:eq-gen-d} and \(n\) is the sample size. Thus, \(d_c = t_c \times \frac{1}{\sqrt{n}}\) (\(\frac{1}{\sqrt{n}}\) because the standard deviation of a standardized effect size is one by definition) is equivalent to \eqref{eq:eq-gen-crit}. The only caveat is that calculating \(d\) or \(d_c\) in this way assume that the standard deviation used to calculate the test statistics and the effect size is the same. While this is true most of the time, as explained in the paired \(t\)-test section, there are more than one methods to calculate the (critical) effect size using different standard deviations. Furthemore, this method assumes that the two groups (in case of a two-sample \(t\)-test) have the same size.
 
-\hypertarget{one-sample-t-test}{%
-\subsubsection{\texorpdfstring{One sample \(t\)-test}{One sample t-test}}\label{one-sample-t-test}}
+\subsubsection{\texorpdfstring{One sample \(t\)-test}{One sample t-test}}\label{one-sample-t-test}
 
 For the one-sample \(t\)-test \(b\) is the sample mean and \(s\) is the sample standard deviation and \(n\) is the sample size. \(SE_b = \frac{s}{\sqrt{n}}\) and the \(t_c\) is based on \(n - 1\) degrees of freedom. Thus \(b_c = t_c \times SE_b\) and \(d_c = \frac{b_c}{s}\). Equivalently, \(d_c = t_c \times \frac{1}{\sqrt{n}}\).
 
-\hypertarget{two-sample-t-test}{%
-\subsubsection{\texorpdfstring{Two-sample \(t\)-test}{Two-sample t-test}}\label{two-sample-t-test}}
+\subsubsection{\texorpdfstring{Two-sample \(t\)-test}{Two-sample t-test}}\label{two-sample-t-test}
 
 We can apply the one-sample approach to the two-sample case. When assuming homogeneity of the variances between the two groups we have \(n_1 + n_2 - 2\) degrees of freedom to calculate \(t_c\) and \(s\) is the pooled standard deviation (\(s_p\)) calculated using Equation \eqref{eq:eq-s-p-twsmp}. The \(s_p\) can be interpreted as the square root of the weighted average of the samples standard deviations. The effect size \(d\) is calculated as \(\frac{b}{s_p}\) and the critical effect size can be calculated as \(d_c = \frac{b_c}{s_p}\) with \(b_c = t_c \times SE_b\). \(SE_b\) is calculated as \(s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\). As for the one-sample case, we can calculate the critical effect size from the t statistics as \(d_c = t_c \times \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\).
 
@@ -337,8 +355,7 @@ We can apply the one-sample approach to the two-sample case. When assuming homog
 
 When relaxing the assumption of equal variances (i.e., using the Welch's \(t\)-test) \(s\) is calculated as the square root of the average between the two samples variances, \(SE_b\) is calculated as \(\sqrt{\frac{s^2_{x_1}}{n_1} + \frac{s^2_{x_2}}{n_2}}\). The degrees of freedom for \(t_c\) are calculated in a more complex way using the Welch-Satterthwaite equation (Satterthwaite, 1946; Welch, 1947). For the Welch's \(t\)-test we can calculate the critical effect size removing the sample size from \(t_c\) (as done above) only when \(n_1 = n_2\).
 
-\hypertarget{paired-sample-t-test}{%
-\subsubsection{\texorpdfstring{Paired sample \(t\)-test}{Paired sample t-test}}\label{paired-sample-t-test}}
+\subsubsection{\texorpdfstring{Paired sample \(t\)-test}{Paired sample t-test}}\label{paired-sample-t-test}
 
 For the paired sample case the situation is less straightforward. The reason is that the \(t\) statistic is computed with \(b\) being the average of the paired differences between the two (paired) samples and \(s\) being the standard deviation of the differences. Using these values, we can just compute the critical effects size as for the one-sample case, as a paired \(t\)-test is a one-sample test on the vector of paired differences. Test statistics and effect size based on the standard deviation of differences (the so called \(d_z\)) are used for hypothesis testing and power analysis (Lakens, 2013). The problem is that the \(d_z\) cannot be directly compared to the effect size calculated using the pooled standard deviation (Morris \& DeShon, 2002). If the correlation between the two paired samples is known there is a direct relationship between the pooled standard deviation \(s_p\) and the standard deviation of differences \(s_D\) as reported in Equation \eqref{eq:eq-sp-sd}
 
@@ -352,8 +369,7 @@ For the paired sample case the situation is less straightforward. The reason is 
 
 Even if the hypothesis testing is computed using \(s_D\), we reported the critical effect size value both using the pooled standard deviation and the standard deviation of the differences.
 
-\hypertarget{hedgess-correction}{%
-\subsubsection{Hedges's correction}\label{hedgess-correction}}
+\subsubsection{Hedges's correction}\label{hedgess-correction}
 
 The effect size calculated as in the previous step is known to be inflated especially for small samples. For this reason, there is a corrected version of the effect size called Hedges's \(g\) by Viechtbauer (2007). The Hedges's \(g\) can be calculated for all the \(t\)-test scenarios. The Hegdes's correction is implemented in Equation \eqref{eq:eq-g-correction} where \(\Gamma\) is the gamma function and \(m\) the degrees of freedom.
 
@@ -364,8 +380,7 @@ c(m) = \frac{\Gamma\left(\frac{m}{2}\right)}{\sqrt{\frac{m}{2}} \Gamma\left(\fra
 
 The correction is applied as \(g = c(m) \times d\). The hypothesis testing does not take the Hedges's correction into account, thus the critical \(g\) will be different from the critical \(d\).
 
-\hypertarget{correlation-test}{%
-\subsection{Correlation Test}\label{correlation-test}}
+\subsection{Correlation Test}\label{correlation-test}
 
 Hypothesis testing for the Pearson's correlation coefficient is usually done using the t statistics or using a z statistics. The general approach presented for the \(t\)-test is still valid. The only difference is that the correlation is already a standardized effect size thus there is no need of the standardization term \(s\). Equation \eqref{eq:eq-gen-t} can be used substituting \(b\) with \(r\) (the sample correlation coefficient) as shown in Equation \eqref{eq:eq-rc}. The standard error is calculated as \(SE_r = \sqrt{\frac{1 - r^2}{n - 2}}\) (Bowley, 1928).
 
@@ -397,42 +412,39 @@ We can still use Equation \eqref{eq:eq-gen-t} substituting \(b\) with \(r_z\). T
     \end{gathered}
 \end{equation}
 
-\hypertarget{linear-regression}{%
-\subsection{Linear Regression}\label{linear-regression}}
+\subsection{Linear Regression}\label{linear-regression}
 
 Hypothesis testing on regression coefficients (e.g., using the \texttt{lm} function in R) is performed using the so-called Wald test. The test can be considered a one-sample \(t\)-test where the \(t\)-value is calculated dividing the regression parameter \(\beta_0, \dots, \beta_j\) by its standard error \(SE_{\beta_j}\). The critical \(t\)-value is calculated from a \(t\) distribution using \(n - p - 1\) degrees of freedom where \(n\) is the number of observations and \(p\) is the number of coefficients beyond the intercept. We can substitute \(b\) with \(\beta_j\) and \(SE_{b}\) with \(SE_{\beta_j}\) in Equation \eqref{eq:eq-gen-crit} to find the critical unstandardized regression coefficient (\(\beta_{c_j} = t_c \times SE_{\beta_j}\)). There is no unique way to calculate the standardized version of the critical regression coefficient. The main reason is that in regression modelling we can include categorical and numerical independent variables with main effects and interactions. For example, Groß and Möller (2023) proposed a way to calculate a generalized Cohen's \(d\) from linear regression with or without the presence of other variables dividing the estimated parameter with the residual standard deviation. Gelman (2008) proposed to standardize using two standard deviations because when both numeric and categorical variables are included the coefficients are not on the same metric. Another complication is that in some cases, researchers standardize the dependent variable, the independent variables or both. In general, the unstandardized critical regression coefficient can usually also be easily interpreted. For example, assuming we are regressing some scores on a cognitive tests using the age of participant,the critical regression coefficient is the minimum increase in the cognitive test for a unit age increase that would be significant.
 
-\hypertarget{meta-analysis}{%
-\subsection{Meta-analysis}\label{meta-analysis}}
+\subsection{Meta-analysis}\label{meta-analysis}
 
 Meta-analysis allows to pool information from multiple studies related to a specific research question. The main advantage of meta-analysis is pooling multiple studies to obtain a more precise and powerful estimation of the effect. From a statistical point of view, a meta-analysis can be considered as a weighted linear regression with heterogeneous variances. Similarly to standard linear regression, hypothesis testing is performed using Wald \(t\) or \(z\) tests (Borenstein et al., 2021, p. 338; Viechtbauer et al., 2015). For this reason, we can apply the same equations used for the linear regression. The main difference and advantage is that the meta-analysis model usually works directly with standardized effect size measures and regression coefficients are already standardized.
 
-\hypertarget{other-models}{%
-\subsection{Other models}\label{other-models}}
+\subsection{Other models}\label{other-models}
 
 Despite the fact that we discussed only linear models, the same approach could be applied to other types of models such as generalized linear models. In fact, we simply need to multiply the critical value of the chosen distribution (e.g., \(t\) or \(z\)) by the standard error of the regression coefficient. For example, in a logistic regression with a binary predictor the estimated regression coefficient is the (log) odds ratio. We can obtain the critical odds ratio by multiplying the critical \(z\) statistics (the default in R with the \texttt{glm} function) with the standard error of the regression coefficient.
 
 \footnotesize
 
 \begin{table}[H]
-\centering
-\caption{\label{tab:eqsummary}Summary of the critical effect size equations, see text for details.}
+
+\caption{\label{tab:eqsummary}Summary of the critical effect size equations, see text for details. When possible, we also included the equation to calculate the critical effect size without computing the standard error. For the paired t-test, this is feasible when using the standard deviation of differences. For the two-sample t-test, it is possible only under the assumption of homogeneity of variances.}
 \centering
 \begin{tabular}[t]{ll}
 \toprule
 \textbf{Model} & \textbf{Equation}\\
 \midrule
-One-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s}$\\
+One-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s} = t_c\sqrt{\frac{1}{n}}$\\
 \cmidrule{1-2}
  & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
 \cmidrule{2-2}
-\multirow{-2}{*}{\raggedright\arraybackslash Paired t-test} & $d_{z_c} = \frac{t_c \times \mbox{SE}_b}{s_D}$\\
+\multirow{-2}{*}{\raggedright\arraybackslash Paired t-test} & $d_{z_c} = \frac{t_c \times \mbox{SE}_b}{s_D} = t_c\sqrt{\frac{1}{n}}$\\
 \cmidrule{1-2}
-Between-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
+Between-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p} = t_c\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$\\
 \cmidrule{1-2}
- & $r_c = \frac{t_c}{\sqrt{n - 2 + t^2_c}}$\\
-\cmidrule{2-2}
-\multirow{-2}{*}{\raggedright\arraybackslash Correlation} & $r_{z_c} = \frac{z_c}{\sqrt{n - 3}}$\\
+Correlation test & $r_c = \frac{t_c}{\sqrt{n - 2 + t^2_c}}$\\
+\cmidrule{1-2}
+Correlation & $r_{z_c} = \frac{z_c}{\sqrt{n - 3}}$\\
 \cmidrule{1-2}
 Meta-analysis/Regression & $\beta_c = t_c \times \mbox{SE}_{\beta}$\\
 \bottomrule
@@ -441,8 +453,7 @@ Meta-analysis/Regression & $\beta_c = t_c \times \mbox{SE}_{\beta}$\\
 
 \normalsize
 
-\hypertarget{examples-in-r}{%
-\section{Examples in R}\label{examples-in-r}}
+\section{Examples in R}\label{examples-in-r}
 
 In this section, we introduce the aforementioned user-friendly implementation of the mathematical computations as functions of the package \texttt{criticalESvalue} in R (currently hosted on GitHub). Here, we demonstrate its application through two examples: one example of a \(t\)-test on real data and a computation of the critical effect size values for a correlation from sample size. It is important to note that, in general, depending on the researcher's hypotheses, the package allows for the calculation of either two critical effect size values for two-tailed tests or a single critical effect size value for one-tailed tests, for which the direction must be specified. In the Supplementary online materials additional examples can be found for correlation, \(t\)-test, paired \(t\)-test, linear models and regression coefficients.
 
@@ -547,8 +558,7 @@ In the next example we will show the use of the package's function \texttt{criti
 
 The direction of the hypothesis and the test to apply, either the \(t\)-test or \(z\)-test, should be specified. The output will return the critical correlation value(s), the degrees of freedom, and the type of test used.
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\section{Discussion}\label{discussion}
 
 With the present article, we propose that researchers compute and report the ``critical effect size value(s)'' in their empirical articles. This is not intended to replace other strategies aimed at enhancing the NHST approach to inference. Such strategies, such as the emphasis on estimating effect sizes with confidence intervals (Transue, 2019) or the \textit{a priori} planning for statistical power are valuable in their own right. Instead, our proposal serves as a complementary tool, especially beneficial for facilitating the interpretation of results when statistical power deviates from an optimal level (typically falling below, but occasionally exceeding it). Interestingly, critical effect size values can be retrospectively applied even to already published studies. This possible application facilitates potential reframing of the original interpretations. Serving as a tool for retrospective analysis, critical effect size values may enable a reconsideration of the relevance of previously reported findings.
 
@@ -566,153 +576,152 @@ In conclusion, reporting critical effect size values in empirical articles serve
 
 \newpage
 
-\hypertarget{references}{%
-\section{References}\label{references}}
+\section{References}\label{references}
 
-\hypertarget{refs}{}
+\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-altoe2020enhancing}{}}%
+\bibitem[\citeproctext]{ref-altoe2020enhancing}
 Altoè, G., Bertoldo, G., Zandonella Callegher, C., Toffalini, E., Calcagnı̀, A., Finos, L., \& Pastore, M. (2020). Enhancing statistical inference in psychological research via prospective and retrospective design analysis. \emph{Frontiers in Psychology}, \emph{10}, 499756.
 
-\leavevmode\vadjust pre{\hypertarget{ref-apa2020publication}{}}%
+\bibitem[\citeproctext]{ref-apa2020publication}
 American Psychological Association. (2020). \emph{Publication manual of the american psychological association} (7th ed.). American Psychological Association. \url{https://doi.org/10.1037/0000165-000}
 
-\leavevmode\vadjust pre{\hypertarget{ref-anvari2023not}{}}%
+\bibitem[\citeproctext]{ref-anvari2023not}
 Anvari, F., Kievit, R., Lakens, D., Pennington, C. R., Przybylski, A. K., Tiokhin, L., Wiernik, B. M., \& Orben, A. (2023). Not all effects are indispensable: Psychological science requires verifiable lines of reasoning for whether an effect matters. \emph{Perspectives on Psychological Science}, \emph{18}(2), 503--507.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bakan1967method}{}}%
+\bibitem[\citeproctext]{ref-bakan1967method}
 Bakan, D. (1967). On method: Toward a reconstruction of psychological investigation. \emph{(No Title)}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-borenstein2021introduction}{}}%
+\bibitem[\citeproctext]{ref-borenstein2021introduction}
 Borenstein, M., Hedges, L. V., Higgins, J. P., \& Rothstein, H. R. (2021). \emph{Introduction to meta-analysis}. John wiley \& sons.
 
-\leavevmode\vadjust pre{\hypertarget{ref-boring1919mathematical}{}}%
+\bibitem[\citeproctext]{ref-boring1919mathematical}
 Boring, E. G. (1919). Mathematical vs. Scientific significance. \emph{Psychological Bulletin}, \emph{16}(10), 335.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Bowley1928-yt}{}}%
+\bibitem[\citeproctext]{ref-Bowley1928-yt}
 Bowley, A. L. (1928). The standard deviation of the correlation coefficient. \emph{Journal of the American Statistical Association}, \emph{23}, 31. \url{https://doi.org/10.2307/2277400}
 
-\leavevmode\vadjust pre{\hypertarget{ref-byers2020building}{}}%
+\bibitem[\citeproctext]{ref-byers2020building}
 Byers-Heinlein, K., Bergmann, C., Davies, C., Frank, M. C., Hamlin, J. K., Kline, M., Kominsky, J. F., Kosie, J. E., Lew-Williams, C., Liu, L., et al. (2020). Building a collaborative psychological science: Lessons learned from ManyBabies 1. \emph{Canadian Psychology/Psychologie Canadienne}, \emph{61}(4), 349.
 
-\leavevmode\vadjust pre{\hypertarget{ref-chow1988significance}{}}%
+\bibitem[\citeproctext]{ref-chow1988significance}
 Chow, S. L. (1988). Significance test or effect size? \emph{Psychological Bulletin}, \emph{103}(1), 105.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cohen1994}{}}%
+\bibitem[\citeproctext]{ref-cohen1994}
 Cohen, J. (1994). The earth is round (p \textless{} .05). \emph{American Psychologist}, \emph{49}(12), 997--1003.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cortina1997logic}{}}%
+\bibitem[\citeproctext]{ref-cortina1997logic}
 Cortina, J. M., \& Dunlap, W. P. (1997). On the logic and purpose of significance testing. \emph{Psychological Methods}, \emph{2}(2), 161.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cumming2012statistical}{}}%
+\bibitem[\citeproctext]{ref-cumming2012statistical}
 Cumming, G., Fidler, F., Kalinowski, P., \& Lai, J. (2012). The statistical recommendations of the american psychological association publication manual: Effect sizes, confidence intervals, and meta-analysis. \emph{Australian Journal of Psychology}, \emph{64}(3), 138--146.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Fisher1915-ks}{}}%
+\bibitem[\citeproctext]{ref-Fisher1915-ks}
 Fisher, R. A. (1915). Frequency distribution of the values of the correlation coefficient in samples from an indefinitely large population. \emph{Biometrika}, \emph{10}, 507. \url{https://doi.org/10.2307/2331838}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Fisher1921-qz}{}}%
+\bibitem[\citeproctext]{ref-Fisher1921-qz}
 Fisher, R. A. (1921). On the "probable error" of a coefficient of correlation deduced from a small sample. \emph{Metron}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-funder2019evaluating}{}}%
+\bibitem[\citeproctext]{ref-funder2019evaluating}
 Funder, D. C., \& Ozer, D. J. (2019). Evaluating effect size in psychological research: Sense and nonsense. \emph{Advances in Methods and Practices in Psychological Science}, \emph{2}(2), 156--168.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Gelman2008-zp}{}}%
+\bibitem[\citeproctext]{ref-Gelman2008-zp}
 Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. \emph{Statistics in Medicine}, \emph{27}, 2865--2873. \url{https://doi.org/10.1002/sim.3107}
 
-\leavevmode\vadjust pre{\hypertarget{ref-gigerenzer2004null}{}}%
+\bibitem[\citeproctext]{ref-gigerenzer2004null}
 Gigerenzer, G., Krauss, S., \& Vitouch, O. (2004). The null ritual. \emph{The Sage Handbook of Quantitative Methodology for the Social Sciences}, 391--408.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Gross2023-fl}{}}%
+\bibitem[\citeproctext]{ref-Gross2023-fl}
 Groß, J., \& Möller, A. (2023). A note on cohen's d from a partitioned linear regression model. \emph{Journal of Statistical Theory and Practice}, \emph{17}. \url{https://doi.org/10.1007/s42519-023-00323-w}
 
-\leavevmode\vadjust pre{\hypertarget{ref-hagen1997praise}{}}%
+\bibitem[\citeproctext]{ref-hagen1997praise}
 Hagen, R. L. (1997). \emph{In praise of the null hypothesis statistical test.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-haig2017tests}{}}%
+\bibitem[\citeproctext]{ref-haig2017tests}
 Haig, B. D. (2017). Tests of statistical significance made sound. \emph{Educational and Psychological Measurement}, \emph{77}(3), 489--506.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Hedges1981-za}{}}%
+\bibitem[\citeproctext]{ref-Hedges1981-za}
 Hedges, L. V. (1981). Distribution theory for glass's estimator of effect size and related estimators. \emph{Journal of Educational and Behavioral Statistics: A Quarterly Publication Sponsored by the American Educational Research Association and the American Statistical Association}, \emph{6}, 107--128. \url{https://doi.org/10.3102/10769986006002107}
 
-\leavevmode\vadjust pre{\hypertarget{ref-hedges1984estimation}{}}%
+\bibitem[\citeproctext]{ref-hedges1984estimation}
 Hedges, L. V. (1984). Estimation of effect size under nonrandom sampling: The effects of censoring studies yielding statistically insignificant mean differences. \emph{Journal of Educational Statistics}, \emph{9}(1), 61--85.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hodges1954matching}{}}%
+\bibitem[\citeproctext]{ref-hodges1954matching}
 Hodges, J., \& Lehmann, E. (1954). Matching in paired comparisons. \emph{The Annals of Mathematical Statistics}, \emph{25}(4), 787--791.
 
-\leavevmode\vadjust pre{\hypertarget{ref-jarke2022roadmap}{}}%
+\bibitem[\citeproctext]{ref-jarke2022roadmap}
 Jarke, H., Anand-Vembar, S., Alzahawi, S., Andersen, T. L., Bojanić, L., Carstensen, A., Feldman, G., Garcia-Garzon, E., Kapoor, H., Lewis, S., et al. (2022). A roadmap to large-scale multi-country replications in psychology. \emph{Collabra: Psychology}, \emph{8}(1), 57538.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kirk1996practical}{}}%
+\bibitem[\citeproctext]{ref-kirk1996practical}
 Kirk, R. E. (1996). Practical significance: A concept whose time has come. \emph{Educational and Psychological Measurement}, \emph{56}(5), 746--759.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kramer2014experimental}{}}%
+\bibitem[\citeproctext]{ref-kramer2014experimental}
 Kramer, A. D., Guillory, J. E., \& Hancock, J. T. (2014). Experimental evidence of massive-scale emotional contagion through social networks. \emph{Proceedings of the National Academy of Sciences of the United States of America}, \emph{111}(24), 8788.
 
-\leavevmode\vadjust pre{\hypertarget{ref-krueger2001null}{}}%
+\bibitem[\citeproctext]{ref-krueger2001null}
 Krueger, J. (2001). Null hypothesis significance testing: On the survival of a flawed method. \emph{American Psychologist}, \emph{56}(1), 16.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lakens2013calculating}{}}%
+\bibitem[\citeproctext]{ref-lakens2013calculating}
 Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs. \emph{Frontiers in Psychology}, \emph{4}, 62627.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lakens2021practical}{}}%
+\bibitem[\citeproctext]{ref-lakens2021practical}
 Lakens, D. (2021). The practical alternative to the p value is the correctly used p value. \emph{Perspectives on Psychological Science}, \emph{16}(3), 639--648.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lakens2022sample}{}}%
+\bibitem[\citeproctext]{ref-lakens2022sample}
 Lakens, D. (2022). Sample size justification. \emph{Collabra: Psychology}, \emph{8}(1), 33267.
 
-\leavevmode\vadjust pre{\hypertarget{ref-mesquida2024effect}{}}%
+\bibitem[\citeproctext]{ref-mesquida2024effect}
 Mesquida, C., \& Lakens, D. (2024). Is the effect large enough to matter? Why exercise physiologists should interpret effect sizes meaningfully: A reply to williams et al.(2023). \emph{Journal of Physiology}, \emph{602}(1).
 
-\leavevmode\vadjust pre{\hypertarget{ref-miller2017hypothesis}{}}%
+\bibitem[\citeproctext]{ref-miller2017hypothesis}
 Miller, J. (2017). Hypothesis testing in the real world. \emph{Educational and Psychological Measurement}, \emph{77}(4), 663--672.
 
-\leavevmode\vadjust pre{\hypertarget{ref-morris2002combining}{}}%
+\bibitem[\citeproctext]{ref-morris2002combining}
 Morris, S. B., \& DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \emph{7}(1), 105.
 
-\leavevmode\vadjust pre{\hypertarget{ref-moshontz2018psychological}{}}%
+\bibitem[\citeproctext]{ref-moshontz2018psychological}
 Moshontz, H., Campbell, L., Ebersole, C. R., IJzerman, H., Urry, H. L., Forscher, P. S., Grahe, J. E., McCarthy, R. J., Musser, E. D., Antfolk, J., et al. (2018). The psychological science accelerator: Advancing psychology through a distributed collaborative network. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(4), 501--515.
 
-\leavevmode\vadjust pre{\hypertarget{ref-nickerson2000null}{}}%
+\bibitem[\citeproctext]{ref-nickerson2000null}
 Nickerson, R. S. (2000). Null hypothesis significance testing: A review of an old and continuing controversy. \emph{Psychological Methods}, \emph{5}(2), 241.
 
-\leavevmode\vadjust pre{\hypertarget{ref-nunnally1960place}{}}%
+\bibitem[\citeproctext]{ref-nunnally1960place}
 Nunnally, J. (1960). The place of statistics in psychology. \emph{Educational and Psychological Measurement}, \emph{20}(4), 641--650.
 
-\leavevmode\vadjust pre{\hypertarget{ref-orben_crud_2020}{}}%
+\bibitem[\citeproctext]{ref-orben_crud_2020}
 Orben, A., \& Lakens, D. (2020). Crud ({Re}){Defined}. \emph{Advances in Methods and Practices in Psychological Science}, \emph{3}(2), 238--247. \url{https://doi.org/10.1177/2515245920917961}
 
-\leavevmode\vadjust pre{\hypertarget{ref-riesthuis2024simulation}{}}%
+\bibitem[\citeproctext]{ref-riesthuis2024simulation}
 Riesthuis, P. (2024). Simulation-based power analyses for the smallest effect size of interest: A confidence-interval approach for minimum-effect and equivalence testing. \emph{Advances in Methods and Practices in Psychological Science}, \emph{7}(2), 25152459241240722.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Satterthwaite1946-aq}{}}%
+\bibitem[\citeproctext]{ref-Satterthwaite1946-aq}
 Satterthwaite, F. E. (1946). An approximate distribution of estimates of variance components. \emph{Biometrics Bulletin}, \emph{2}, 110. \url{https://doi.org/10.2307/3002019}
 
-\leavevmode\vadjust pre{\hypertarget{ref-serlin1985rationality}{}}%
+\bibitem[\citeproctext]{ref-serlin1985rationality}
 Serlin, R. C., \& Lapsley, D. K. (1985). \emph{Rationality in psychological research: The good-enough principle.}
 
-\leavevmode\vadjust pre{\hypertarget{ref-sirois2023pupil}{}}%
+\bibitem[\citeproctext]{ref-sirois2023pupil}
 Sirois, S., Brisson, J., Blaser, E., Calignano, G., Donenfeld, J., Hepach, R., Hochmann, J.-R., Kaldy, Z., Liszkowski, U., Mayer, M., et al. (2023). The pupil collaboration: A multi-lab, multi-method analysis of goal attribution in infants. \emph{Infant Behavior and Development}, \emph{73}, 101890.
 
-\leavevmode\vadjust pre{\hypertarget{ref-szucs2017empirical}{}}%
+\bibitem[\citeproctext]{ref-szucs2017empirical}
 Szucs, D., \& Ioannidis, J. P. (2017). Empirical assessment of published effect sizes and power in the recent cognitive neuroscience and psychology literature. \emph{PLoS Biology}, \emph{15}(3), e2000797.
 
-\leavevmode\vadjust pre{\hypertarget{ref-transue2019apa}{}}%
+\bibitem[\citeproctext]{ref-transue2019apa}
 Transue, B. (2019). \emph{APA style 7th edition}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Viechtbauer2007-tq}{}}%
+\bibitem[\citeproctext]{ref-Viechtbauer2007-tq}
 Viechtbauer, W. (2007). Approximate confidence intervals for standardized effect sizes in the two-independent and two-dependent samples design. \emph{Journal of Educational and Behavioral Statistics: A Quarterly Publication Sponsored by the American Educational Research Association and the American Statistical Association}, \emph{32}, 39--60. \url{https://doi.org/10.3102/1076998606298034}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Viechtbauer2015-tn}{}}%
+\bibitem[\citeproctext]{ref-Viechtbauer2015-tn}
 Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., \& Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \emph{20}, 360--374. \url{https://doi.org/10.1037/met0000023}
 
-\leavevmode\vadjust pre{\hypertarget{ref-weiss2014spatial}{}}%
+\bibitem[\citeproctext]{ref-weiss2014spatial}
 Weiss, A. H., Biron, T., Lieder, I., Granot, R. Y., \& Ahissar, M. (2014). Spatial vision is superior in musicians when memory plays a role. \emph{Journal of Vision}, \emph{14}(9), 18--18.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Welch1947-wh}{}}%
+\bibitem[\citeproctext]{ref-Welch1947-wh}
 Welch, B. L. (1947). The generalization of {``student's''} problem when several different population variances are involved. \emph{Biometrika}, \emph{34}, 28. \url{https://doi.org/10.2307/2332510}
 
-\leavevmode\vadjust pre{\hypertarget{ref-wilson2020science}{}}%
+\bibitem[\citeproctext]{ref-wilson2020science}
 Wilson, B. M., Harris, C. R., \& Wixted, J. T. (2020). Science is not a signal detection problem. \emph{Proceedings of the National Academy of Sciences}, \emph{117}(11), 5559--5567.
 
 \end{CSLReferences}
