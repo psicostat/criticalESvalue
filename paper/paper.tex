@@ -198,7 +198,7 @@
     {}{\InnerPatchFailed}%
   }
 {}{\PatchFailed}
-\keywords{critical effect size values, statistical significance, hypothesis testing, effect sizes\newline\indent Word count: 4856}
+\keywords{critical effect size values, statistical significance, hypothesis testing, effect sizes\newline\indent Word count: 4922}
 \usepackage{csquotes}
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
@@ -256,7 +256,7 @@ Critical effect size values represent the smallest detectable effect that can re
 
 The ``critical effect size'' refers to the smallest effect size that can be statistically significant, given the test performed, the sample size, and the alpha level (Lakens, 2022). Consider a study that tests a bivariate correlation with \(n = 20\) participants and uses \(\alpha < 0.05\) as the threshold for statistical significance in a two-sided test. The critical effect size values for this test are Pearson's \(r = -0.44\) and \(r = 0.44\), which means that the statistical test will yield a significant result for effects more extreme than \(r = -0.44\) or \(r = 0.44\), while observed effect sizes between these two values will lead to a statistically non-significant result. In the present paper, we suggest that researchers should systematically report critical effect size values when they make statistical inferences using significance levels in hypothesis tests to make claims about the presence or absence of effects. Critical effect size values can serve as a useful complement for interpreting study results, communicate the informational value of a study design, and contextualize the interpretation of non-significant results, particularly when statistical significance is relied upon for inference. Reporting critical effect size values is especially important when the sample size was not (or could not) predetermined on the basis of a smallest effect size of interest.
 
-Null hypothesis significance testing (NHST) remains the most prominent approach for statistical inference in science, even though there are widespread concerns about the misuse of hypothesis tests (Chow, 1988; Cohen, 1994; Cortina \& Dunlap, 1997; Gigerenzer et al., 2004; Hagen, 1997; Haig, 2017; Krueger, 2001; Lakens, 2021; Miller, 2017; Nickerson, 2000). Over the past decades, numerous proposals have emerged to improve the use of hypothesis testing. These include complementing hypothesis tests with effect sizes and their confidence intervals, preregistering hypotheses before the data is collected, and conducting power analyses to determine the sample size \textit{a priori} based on a smallest effect size of interest (Cumming et al., 2012; Transue, 2019). Researchers often publish studies with low power for medium to small effect sizes (Szucs \& Ioannidis, 2017), with the main justification for the sample size being resource limitations (Lakens, 2022). However, low power makes it challenging to distinguish signal from noise, and combined with the selective reporting of statistically significant results in the published literature leads to an overestimation of effect sizes (Altoè et al., 2020). Certain types of research questions can be studied by relying on online data collection, which has made it cheaper and more feasible to collect very large samples. Studies with very large samples are well-powered to detect even small effect sizes, but they also require researchers to carefully consider the possibility that an effect might be statistically significant, but practically insignificant (Anvari et al., 2023; Kirk, 1996). The risk is that researchers will heuristically or opportunistically accept all effects as potentially important. For this reason ``researchers need to explicitly state the mechanisms that can amplify the importance of an observed effect size and the mechanisms that counteract it'' (Anvari et al., 2023).
+Null hypothesis significance testing (NHST) remains the most prominent approach for statistical inference in science, even though there are widespread concerns about the misuse of hypothesis tests (Chow, 1988; Cohen, 1994; Cortina \& Dunlap, 1997; Gigerenzer et al., 2004; Hagen, 1997; Haig, 2017; Krueger, 2001; Lakens, 2021; Miller, 2017; Nickerson, 2000). Over the past decades, numerous proposals have emerged to improve the use of hypothesis testing. These include complementing hypothesis tests with effect sizes and their confidence intervals, preregistering hypotheses before the data is collected, and conducting power analyses to determine the sample size \textit{a priori} based on a smallest effect size of interest (Cumming et al., 2012; APA, 2020). Researchers often publish studies with low power for medium to small effect sizes (Szucs \& Ioannidis, 2017), with the main justification for the sample size being resource limitations (Lakens, 2022). However, low power makes it challenging to distinguish signal from noise, and combined with the selective reporting of statistically significant results in the published literature leads to an overestimation of effect sizes (Altoè et al., 2020). Certain types of research questions can be studied by relying on online data collection, which has made it cheaper and more feasible to collect very large samples. Studies with very large samples are well-powered to detect even small effect sizes, but they also require researchers to carefully consider the possibility that an effect might be statistically significant, but practically insignificant (Anvari et al., 2023; Kirk, 1996). The risk is that researchers will heuristically or opportunistically accept all effects as potentially important. For this reason ``researchers need to explicitly state the mechanisms that can amplify the importance of an observed effect size and the mechanisms that counteract it'' (Anvari et al., 2023, p. 504).
 
 We believe there are two clear benefits to reporting critical effect size values for a corresponding test. In the following sections we will illustrate examples of common scenarios and we will go through the main problems of certain research scenarios and possible solutions, highlighting the utility of critical effect size values in such contexts.
 
@@ -287,7 +287,7 @@ Lastly, routinely reasoning about critical effect sizes, alongside the use of co
 \hypertarget{how-to-compute-critical-effect-size-values}{%
 \section{How to Compute Critical Effect Size Values}\label{how-to-compute-critical-effect-size-values}}
 
-In this section, we provide guidance and formulas for computing standardized critical effect sizes with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's \(d\)), correlations (Pearson's \(r\)), and raw and standardized coefficients in linear models. The same equations can be used to calculate unstandardized effect sizes that can be preferred in some situations (e.g., linear models). These formulas have been incorporated into R functions of the package \texttt{criticalESvalue} accessible at: \url{https://github.com/psicostat/criticalESvalue}, and are elaborated upon in the subsequent section.
+In this section, we provide guidance and formulas for computing standardized critical effect sizes with examples for frequently encountered effect sizes including Standardized Mean Differences (Cohen's \(d\)), correlations (Pearson's \(r\)), and raw and standardized coefficients in linear models. Table \ref{tab:eqsummary} summarises those equations. The same equations can be used to calculate unstandardized effect sizes that can be preferred in some situations (e.g., linear models). These formulas have been incorporated into R functions of the package \texttt{criticalESvalue} accessible at: \url{https://github.com/psicostat/criticalESvalue}, and are elaborated upon in the subsequent section.
 
 \hypertarget{t-test}{%
 \subsection{\texorpdfstring{\(t\)-test}{t-test}}\label{t-test}}
@@ -405,20 +405,18 @@ Hypothesis testing on regression coefficients (e.g., using the \texttt{lm} funct
 \hypertarget{meta-analysis}{%
 \subsection{Meta-analysis}\label{meta-analysis}}
 
-Meta-analysis allows to pool information from multiple studies related to a specific research question. The main advantage of meta-analysis is pooling multiple studies to obtain a more precise and powerful estimation of the effect. From a statistical point of view, a meta-analysis can be considered as a weighted linear regression with heterogeneous variances. Similarly to standard linear regression, hypothesis testing is performed using Wald \(t\) or \(z\) tests (Rubio-Aparicio et al., 2020; Viechtbauer et al., 2015). For this reason, we can apply the same equations used for the linear regression. The main difference and advantage is that the meta-analysis model usually works directly with standardized effect size measures and regression coefficients are already standardized.
+Meta-analysis allows to pool information from multiple studies related to a specific research question. The main advantage of meta-analysis is pooling multiple studies to obtain a more precise and powerful estimation of the effect. From a statistical point of view, a meta-analysis can be considered as a weighted linear regression with heterogeneous variances. Similarly to standard linear regression, hypothesis testing is performed using Wald \(t\) or \(z\) tests (Borenstein et al., 2021, p. 338; Viechtbauer et al., 2015). For this reason, we can apply the same equations used for the linear regression. The main difference and advantage is that the meta-analysis model usually works directly with standardized effect size measures and regression coefficients are already standardized.
 
 \hypertarget{other-models}{%
 \subsection{Other models}\label{other-models}}
 
 Despite the fact that we discussed only linear models, the same approach could be applied to other types of models such as generalized linear models. In fact, we simply need to multiply the critical value of the chosen distribution (e.g., \(t\) or \(z\)) by the standard error of the regression coefficient. For example, in a logistic regression with a binary predictor the estimated regression coefficient is the (log) odds ratio. We can obtain the critical odds ratio by multiplying the critical \(z\) statistics (the default in R with the \texttt{glm} function) with the standard error of the regression coefficient.
 
-Table \ref{tab:eqsummary} summarises the equations presented above.
-
 \footnotesize
 
 \begin{table}[H]
 \centering
-\caption{\label{tab:eqsummary}Summary of the critical effect size equations.}
+\caption{\label{tab:eqsummary}Summary of the critical effect size equations, see text for details.}
 \centering
 \begin{tabular}[t]{ll}
 \toprule
@@ -446,7 +444,7 @@ Meta-analysis/Regression & $\beta_c = t_c \times \mbox{SE}_{\beta}$\\
 \hypertarget{examples-in-r}{%
 \section{Examples in R}\label{examples-in-r}}
 
-In this section, we introduce the aforementioned user-friendly implementation of the mathematical computations as functions of the package \texttt{criticalESvalue} in R. Here, we demonstrate its application through two examples: one example of a \(t\)-test on real data and a computation of the critical effect size values for a correlation from sample size. It is important to note that, in general, depending on the researcher's hypotheses, the package allows for the calculation of either two critical effect size values for two-tailed tests or a single critical effect size value for one-tailed tests, for which the direction must be specified. In the Supplementary online materials additional examples can be found for correlation, \(t\)-test, paired \(t\)-test, linear models and regression coefficients.
+In this section, we introduce the aforementioned user-friendly implementation of the mathematical computations as functions of the package \texttt{criticalESvalue} in R (currently hosted on GitHub). Here, we demonstrate its application through two examples: one example of a \(t\)-test on real data and a computation of the critical effect size values for a correlation from sample size. It is important to note that, in general, depending on the researcher's hypotheses, the package allows for the calculation of either two critical effect size values for two-tailed tests or a single critical effect size value for one-tailed tests, for which the direction must be specified. In the Supplementary online materials additional examples can be found for correlation, \(t\)-test, paired \(t\)-test, linear models and regression coefficients.
 
 First the package should be downloaded and opened with the \texttt{library} function:
 
@@ -576,11 +574,17 @@ In conclusion, reporting critical effect size values in empirical articles serve
 \leavevmode\vadjust pre{\hypertarget{ref-altoe2020enhancing}{}}%
 Altoè, G., Bertoldo, G., Zandonella Callegher, C., Toffalini, E., Calcagnı̀, A., Finos, L., \& Pastore, M. (2020). Enhancing statistical inference in psychological research via prospective and retrospective design analysis. \emph{Frontiers in Psychology}, \emph{10}, 499756.
 
+\leavevmode\vadjust pre{\hypertarget{ref-apa2020publication}{}}%
+American Psychological Association. (2020). \emph{Publication manual of the american psychological association} (7th ed.). American Psychological Association. \url{https://doi.org/10.1037/0000165-000}
+
 \leavevmode\vadjust pre{\hypertarget{ref-anvari2023not}{}}%
 Anvari, F., Kievit, R., Lakens, D., Pennington, C. R., Przybylski, A. K., Tiokhin, L., Wiernik, B. M., \& Orben, A. (2023). Not all effects are indispensable: Psychological science requires verifiable lines of reasoning for whether an effect matters. \emph{Perspectives on Psychological Science}, \emph{18}(2), 503--507.
 
 \leavevmode\vadjust pre{\hypertarget{ref-bakan1967method}{}}%
 Bakan, D. (1967). On method: Toward a reconstruction of psychological investigation. \emph{(No Title)}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-borenstein2021introduction}{}}%
+Borenstein, M., Hedges, L. V., Higgins, J. P., \& Rothstein, H. R. (2021). \emph{Introduction to meta-analysis}. John wiley \& sons.
 
 \leavevmode\vadjust pre{\hypertarget{ref-boring1919mathematical}{}}%
 Boring, E. G. (1919). Mathematical vs. Scientific significance. \emph{Psychological Bulletin}, \emph{16}(10), 335.
@@ -680,9 +684,6 @@ Orben, A., \& Lakens, D. (2020). Crud ({Re}){Defined}. \emph{Advances in Methods
 
 \leavevmode\vadjust pre{\hypertarget{ref-riesthuis2024simulation}{}}%
 Riesthuis, P. (2024). Simulation-based power analyses for the smallest effect size of interest: A confidence-interval approach for minimum-effect and equivalence testing. \emph{Advances in Methods and Practices in Psychological Science}, \emph{7}(2), 25152459241240722.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Rubio-Aparicio2020-gd}{}}%
-Rubio-Aparicio, M., López-López, J. A., Viechtbauer, W., Marín-Martínez, F., Botella, J., \& Sánchez-Meca, J. (2020). Testing categorical moderators in mixed-effects meta-analysis in the presence of heteroscedasticity. \emph{Journal of Experimental Education}, \emph{88}, 288--310. \url{https://doi.org/10.1080/00220973.2018.1561404}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Satterthwaite1946-aq}{}}%
 Satterthwaite, F. E. (1946). An approximate distribution of estimates of variance components. \emph{Biometrics Bulletin}, \emph{2}, 110. \url{https://doi.org/10.2307/3002019}
