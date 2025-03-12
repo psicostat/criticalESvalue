@@ -1,24 +1,24 @@
 \begin{table*}[hbt]
 \ifnextchar[{\eatarg}{}
 [H]
-
-\caption{\label{tab:unnamed-chunk-1}Summary of the critical effect size equations.}
+\centering
+\caption{\label{tab:eqsummary}Summary of the critical effect size equations, see text for details. When possible, we also included the equation to calculate the critical effect size without computing the standard error. For the paired t-test, this is feasible when using the standard deviation of differences. For the two-sample t-test, it is possible only under the assumption of homogeneity of variances.}
 \centering
 \begin{tabular}[t]{ll}
 \toprule
 \textbf{Model} & \textbf{Equation}\\
 \midrule
-One-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s}$\\
+One-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s} = t_c\sqrt{\frac{1}{n}}$\\
 \cmidrule{1-2}
  & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
 \cmidrule{2-2}
-\multirow{-2}{*}{\raggedright\arraybackslash Paired t-test} & $d_{z_c} = \frac{t_c \times \mbox{SE}_b}{s_D}$\\
+\multirow{-2}{*}{\raggedright\arraybackslash Paired t-test} & $d_{z_c} = \frac{t_c \times \mbox{SE}_b}{s_D} = t_c\sqrt{\frac{1}{n}}$\\
 \cmidrule{1-2}
-Between-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p}$\\
+Between-sample t-test & $d_c = \frac{t_c \times \mbox{SE}_b}{s_p} = t_c\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$\\
 \cmidrule{1-2}
- & $r_c = \frac{t_c}{\sqrt{n - 2 + t^2_c}}$\\
-\cmidrule{2-2}
-\multirow{-2}{*}{\raggedright\arraybackslash Correlation} & $r_{z_c} = \frac{z_c}{\sqrt{n - 3}}$\\
+Correlation test & $r_c = \frac{t_c}{\sqrt{n - 2 + t^2_c}}$\\
+\cmidrule{1-2}
+Correlation & $r_{z_c} = \frac{z_c}{\sqrt{n - 3}}$\\
 \cmidrule{1-2}
 Meta-analysis/Regression & $\beta_c = t_c \times \mbox{SE}_{\beta}$\\
 \bottomrule
